@@ -199,8 +199,15 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     display: flex; align-items: center; justify-content: center;
 }
 .preloader-inner { text-align: center; }
-.pre-ring { width: 70px; height: 70px; margin: 0 auto 20px; }
-.pre-ring svg { width: 100%; height: 100%; }
+.pre-ring { width: 70px; height: 70px; margin: 0 auto 20px; position: relative; }
+.pre-ring svg { width: 100%; height: 100%; position: relative; z-index: 1; }
+.pre-logo {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+    z-index: 2; opacity: 0;
+    animation: logoFadeIn 0.8s 0.3s ease forwards;
+}
+@keyframes logoFadeIn { to { opacity: 1; } }
 .pre-ring circle {
     fill: none; stroke: var(--caramel); stroke-width: 1.5; stroke-linecap: round;
     stroke-dasharray: 251; stroke-dashoffset: 251;
@@ -574,6 +581,10 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     flex-direction: column;
     min-height: 460px;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+.ip-screenshot {
+    width: 100%; height: 100%; object-fit: cover; object-position: top;
+    display: block; min-height: 460px;
 }
 /* Status bar */
 .ip-status {
