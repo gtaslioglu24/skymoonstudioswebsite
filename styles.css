@@ -581,6 +581,7 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     flex-direction: column;
     min-height: 460px;
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
 }
 .ip-screenshot {
     width: 100%; height: 100%; object-fit: cover; object-position: top;
