@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skymoon Studios — Hayalleri Kodluyoruz</title>
+    <meta name="description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-aura" id="cursorAura"></div>
+
+    <!-- Starfield Canvas -->
+    <canvas id="starfield"></canvas>
+
+    <!-- Grain -->
+    <div class="grain"></div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="pre-ring">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>
+            </div>
+            <div class="pre-text">
+                <span class="pre-l">S</span><span class="pre-l">k</span><span class="pre-l">y</span><span class="pre-l">m</span><span class="pre-l">o</span><span class="pre-l">o</span><span class="pre-l">n</span>
+            </div>
+            <div class="pre-sub">S T U D I O S</div>
+            <div class="pre-bar"><div class="pre-fill" id="preFill"></div></div>
+        </div>
+    </div>
+
+    <!-- ─── NAV ─── -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#hero" class="brand">
+                <img src="skymoonstudioslogo.png" alt="Skymoon Studios" class="brand-logo">
+                <span>skymoon <em>studios</em></span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#about" class="nav-link" data-tr="hakkımızda" data-en="about">hakkımızda</a>
+                <a href="#services" class="nav-link" data-tr="hizmetler" data-en="services">hizmetler</a>
+                <a href="#work" class="nav-link" data-tr="projeler" data-en="projects">projeler</a>
+                <a href="#process" class="nav-link" data-tr="süreç" data-en="process">süreç</a>
+                <a href="#contact" class="nav-link" data-tr="iletişim" data-en="contact">iletişim</a>
+            </div>
+            <div class="nav-toggles">
+                <button class="toggle-btn" id="themeToggle" aria-label="Tema değiştir">
+                    <span class="toggle-icon sun">☀</span>
+                    <span class="toggle-icon moon">☾</span>
+                </button>
+                <button class="toggle-btn" id="langToggle" aria-label="Dil değiştir">
+                    <span class="lang-label">EN</span>
+                </button>
+            </div>
+            <a href="#contact" class="nav-cta" data-tr="birlikte çalışalım" data-en="let's work together">birlikte çalışalım<span class="sparkle">✦</span></a>
+            <button class="burger" id="burger" aria-label="Menü"><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-links">
+            <a href="#about" class="drawer-link" data-tr="hakkımızda" data-en="about">hakkımızda</a>
+            <a href="#services" class="drawer-link" data-tr="hizmetler" data-en="services">hizmetler</a>
+            <a href="#work" class="drawer-link" data-tr="projeler" data-en="projects">projeler</a>
+            <a href="#process" class="drawer-link" data-tr="süreç" data-en="process">süreç</a>
+            <a href="#contact" class="drawer-link" data-tr="iletişim" data-en="contact">iletişim</a>
+        </div>
+    </div>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-inner container">
+            <h1 class="hero-h1">
+                <span class="line"><span class="word" data-tr="Hayalleri" data-en="We code">Hayalleri</span></span>
+                <span class="line"><span class="word glow-text" data-tr="kodluyoruz" data-en="dreams">kodluyoruz</span></span>
+            </h1>
+            <p class="hero-p" data-tr="Fikirlerinizi sıcak, samimi ve estetik dijital deneyimlere dönüştürmek için buradayız. Her piksel özenle, her satır sevgiyle." data-en="We're here to transform your ideas into warm, elegant digital experiences. Every pixel with care, every line with love.">Fikirlerinizi sıcak, samimi ve estetik dijital deneyimlere dönüştürmek için buradayız. Her piksel özenle, her satır sevgiyle.</p>
+            <div class="hero-btns">
+                <a href="#work" class="btn-glow">
+                    <span class="btn-glow-bg"></span>
+                    <span class="btn-glow-text" data-tr="projelerimiz →" data-en="our projects →">projelerimiz →</span>
+                </a>
+                <a href="#contact" class="btn-ghost" data-tr="iletişim" data-en="contact">iletişim</a>
+            </div>
+        </div>
+
+        <!-- Floating orbit elements -->
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-ring orbit-ring-3"></div>
+
+
+    </section>
+
+    <!-- ═══════════════ ABOUT ═══════════════ -->
+    <section class="section" id="about">
+        <div class="container about-grid">
+            <div class="about-left rv">
+                <span class="eyebrow"><span class="ey-line"></span><span data-tr="hakkımızda" data-en="about us">hakkımızda</span></span>
+                <h2 class="sec-title" data-tr="İyi tasarım<br><span class='glow-text'>hissedilir,</span><br>açıklanmaz." data-en="Good design<br><span class='glow-text'>is felt,</span><br>not explained.">İyi tasarım<br><span class="glow-text">hissedilir,</span><br>açıklanmaz.</h2>
+            </div>
+            <div class="about-right rv" data-d=".15">
+                <p class="lead-p" data-tr="Skymoon Studios olarak yazılımı sadece kod olarak görmüyoruz — onu sıcak bir deneyime dönüştürüyoruz." data-en="At Skymoon Studios, we don't see software as just code — we turn it into a warm experience.">Skymoon Studios olarak yazılımı sadece kod olarak görmüyoruz — onu sıcak bir deneyime dönüştürüyoruz.</p>
+                <p class="body-p" data-tr="Kullanıcı deneyimini ön planda tutarak estetik ve fonksiyonelliği bir arada sunuyoruz. Mobil uygulamalardan web platformlarına, UI/UX tasarımından backend mimarisine kadar geniş bir yelpazede hizmet veriyoruz." data-en="Prioritizing user experience, we deliver aesthetics and functionality together. From mobile apps to web platforms, from UI/UX design to backend architecture.">Kullanıcı deneyimini ön planda tutarak estetik ve fonksiyonelliği bir arada sunuyoruz. Mobil uygulamalardan web platformlarına, UI/UX tasarımından backend mimarisine kadar geniş bir yelpazede hizmet veriyoruz.</p>
+                <div class="feature-list">
+                    <div class="feature-pill rv" data-d=".1">
+                        <div class="fp-glow"></div>
+                        <div class="fp-text"><strong data-tr="Hızlı & Verimli" data-en="Fast & Efficient">Hızlı & Verimli</strong><span data-tr="Agile ile çevik geliştirme" data-en="Agile development methodology">Agile ile çevik geliştirme</span></div>
+                    </div>
+                    <div class="feature-pill rv" data-d=".2">
+                        <div class="fp-glow"></div>
+                        <div class="fp-text"><strong data-tr="Estetik & İşlevsel" data-en="Aesthetic & Functional">Estetik & İşlevsel</strong><span data-tr="Tasarım odaklı mühendislik" data-en="Design-driven engineering">Tasarım odaklı mühendislik</span></div>
+                    </div>
+                    <div class="feature-pill rv" data-d=".3">
+                        <div class="fp-glow"></div>
+                        <div class="fp-text"><strong data-tr="Samimi & Özenli" data-en="Friendly & Meticulous">Samimi & Özenli</strong><span data-tr="Her projeye sevgiyle yaklaşıyoruz" data-en="We approach every project with care">Her projeye sevgiyle yaklaşıyoruz</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SERVICES ═══════════════ -->
+    <section class="section section--dark" id="services">
+        <div class="container">
+            <div class="center-head">
+                <span class="eyebrow" data-tr="hizmetlerimiz" data-en="our services">hizmetlerimiz</span>
+                <h2 class="sec-title" data-tr="Neler <span class='glow-text'>yapıyoruz</span>?" data-en="What do we <span class='glow-text'>do</span>?">Neler <span class="glow-text">yapıyoruz</span>?</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-tile rv" data-d="0">
+                    <div class="tile-border"></div>
+                    <div class="tile-shine"></div>
+                    <div class="tile-content">
+                        <div class="tile-head">
+                            <span class="tile-icon">💻</span>
+                            <span class="tile-num">01</span>
+                        </div>
+                        <h3 data-tr="Web Geliştirme" data-en="Web Development">Web Geliştirme</h3>
+                        <p data-tr="Modern, performanslı ve SEO-dostu web uygulamaları. Tüm cihazlarda mükemmel görünüm." data-en="Modern, performant and SEO-friendly web applications. Perfect look on all devices.">Modern, performanslı ve SEO-dostu web uygulamaları. Tüm cihazlarda mükemmel görünüm.</p>
+                        <div class="tile-tags"><span>React</span><span>Next.js</span><span>TypeScript</span></div>
+                        <div class="tile-arrow">→</div>
+                    </div>
+                </div>
+                <div class="service-tile rv" data-d=".08">
+                    <div class="tile-border"></div>
+                    <div class="tile-shine"></div>
+                    <div class="tile-content">
+                        <div class="tile-head">
+                            <span class="tile-icon">📱</span>
+                            <span class="tile-num">02</span>
+                        </div>
+                        <h3 data-tr="Mobil Uygulama" data-en="Mobile App">Mobil Uygulama</h3>
+                        <p data-tr="iOS ve Android için native ve cross-platform uygulamalar. Sezgisel ve akıcı deneyim." data-en="Native and cross-platform apps for iOS and Android. Intuitive and smooth experience.">iOS ve Android için native ve cross-platform uygulamalar. Sezgisel ve akıcı deneyim.</p>
+                        <div class="tile-tags"><span>Flutter</span><span>React Native</span><span>Swift</span></div>
+                        <div class="tile-arrow">→</div>
+                    </div>
+                </div>
+                <div class="service-tile rv" data-d=".16">
+                    <div class="tile-border"></div>
+                    <div class="tile-shine"></div>
+                    <div class="tile-content">
+                        <div class="tile-head">
+                            <span class="tile-icon">🎨</span>
+                            <span class="tile-num">03</span>
+                        </div>
+                        <h3 data-tr="UI/UX Tasarım" data-en="UI/UX Design">UI/UX Tasarım</h3>
+                        <p data-tr="Kullanıcı odaklı, estetik arayüzler. Wireframe'den prototipe, tasarım sistemi oluşturma." data-en="User-centered, aesthetic interfaces. From wireframes to prototypes and design systems.">Kullanıcı odaklı, estetik arayüzler. Wireframe'den prototipe, tasarım sistemi oluşturma.</p>
+                        <div class="tile-tags"><span>Figma</span><span>Prototype</span><span>Design System</span></div>
+                        <div class="tile-arrow">→</div>
+                    </div>
+                </div>
+                <div class="service-tile rv" data-d=".24">
+                    <div class="tile-border"></div>
+                    <div class="tile-shine"></div>
+                    <div class="tile-content">
+                        <div class="tile-head">
+                            <span class="tile-icon">⚙️</span>
+                            <span class="tile-num">04</span>
+                        </div>
+                        <h3 data-tr="Backend & API" data-en="Backend & API">Backend & API</h3>
+                        <p data-tr="Ölçeklenebilir backend altyapıları. Güçlü API çözümleri ve güvenli mimari." data-en="Scalable backend infrastructure. Powerful API solutions and secure architecture.">Ölçeklenebilir backend altyapıları. Güçlü API çözümleri ve güvenli mimari.</p>
+                        <div class="tile-tags"><span>Node.js</span><span>Python</span><span>PostgreSQL</span></div>
+                        <div class="tile-arrow">→</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ PORTFOLIO ═══════════════ -->
+    <section class="section" id="work">
+        <div class="container">
+            <div class="center-head">
+                <span class="eyebrow" data-tr="projelerimiz" data-en="our projects">projelerimiz</span>
+                <h2 class="sec-title" data-tr="Son <span class='glow-text'>çalışmalarımız</span>" data-en="Our latest <span class='glow-text'>work</span>">Son <span class="glow-text">çalışmalarımız</span></h2>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-showcase rv">
+                <div class="ps-visual">
+                    <div class="ps-glow"></div>
+                    <div class="macbook-wrap">
+                        <div class="macbook-screen">
+                            <div class="browser-mock">
+                                <div class="bm-body">
+                                    <video autoplay muted loop playsinline class="bm-video">
+                                        <source src="styleupsvideo.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="macbook-base">
+                            <div class="macbook-notch"></div>
+                        </div>
+                        <div class="macbook-shadow"></div>
+                    </div>
+                    <div class="ps-badge ps-badge-1"><span>✨</span> Live Project</div>
+                </div>
+                <div class="ps-info">
+                    <div class="ps-meta"><span class="meta-tag accent">Web Platform</span><span class="meta-tag">2026</span></div>
+                    <h3 class="ps-title">StyleUps Website</h3>
+                    <p data-tr="StyleUps markası için modern ve etkileyici web platformu. Kullanıcı dostu arayüzü, hızlı performansı ve şık tasarımıyla markanın dijital yüzü." data-en="A modern and impressive web platform for the StyleUps brand. The digital face of the brand with its user-friendly interface, fast performance and elegant design.">StyleUps markası için modern ve etkileyici web platformu. Kullanıcı dostu arayüzü, hızlı performansı ve şık tasarımıyla markanın dijital yüzü.</p>
+                    <div class="tile-tags"><span>React</span><span>Next.js</span><span>Tailwind</span><span>Framer Motion</span></div>
+                    <div class="ps-metrics">
+                        <div class="metric-card"><div class="mc-val">99</div><div class="mc-lbl">Performance</div></div>
+                        <div class="metric-card"><div class="mc-val">100</div><div class="mc-lbl">SEO Score</div></div>
+                        <div class="metric-card"><div class="mc-val">2.1s</div><div class="mc-lbl">Load Time</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-showcase project-showcase--flip rv">
+                <div class="ps-visual">
+                    <div class="ps-glow"></div>
+                    <div class="iphone-mock">
+                        <div class="ip-screen">
+                            <div class="ip-status">
+                                <span class="ip-time">09:41</span>
+                                <div class="ip-island"></div>
+                                <div class="ip-icons">
+                                    <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><path d="M1 6h1.5v4H1zM4 4h1.5v6H4zM7 2h1.5v8H7zM10 0h1.5v10H10z" opacity=".9"/></svg>
+                                    <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor"><path d="M12.5 1.5a7.5 7.5 0 00-11 0l1 1a6 6 0 019 0zm-2 2a4.5 4.5 0 00-7 0l1 1a3 3 0 014.9 0zm-2 2a1.5 1.5 0 00-3 0l1.5 1.5z"/></svg>
+                                    <div class="ip-batt"><div class="ip-batt-fill"></div></div>
+                                </div>
+                            </div>
+                            <div class="ip-app">
+                                <div class="ip-header">
+                                    <div class="ip-greeting">
+                                        <span class="ip-hello">Merhaba, Ayşe</span>
+                                        <span class="ip-sub">Bugün ne giymek istersin?</span>
+                                    </div>
+                                    <div class="ip-avatar"></div>
+                                </div>
+                                <div class="ip-search-bar">
+                                    <span class="ip-search-icon">⌕</span>
+                                    <span>Stil, marka veya ürün ara...</span>
+                                </div>
+                                <div class="ip-categories">
+                                    <span class="ip-cat active">Trend</span>
+                                    <span class="ip-cat">Casual</span>
+                                    <span class="ip-cat">Spor</span>
+                                    <span class="ip-cat">Klasik</span>
+                                </div>
+                                <div class="ip-products">
+                                    <div class="ip-product">
+                                        <div class="ip-prod-img" style="background:linear-gradient(145deg,#e8c9a8,#c8956c)"></div>
+                                        <div class="ip-prod-fav">♡</div>
+                                        <div class="ip-prod-info"><span class="ip-prod-name">Camel Trench</span><span class="ip-prod-price">₺1,290</span></div>
+                                    </div>
+                                    <div class="ip-product">
+                                        <div class="ip-prod-img" style="background:linear-gradient(145deg,#b8a090,#8c7060)"></div>
+                                        <div class="ip-prod-fav">♡</div>
+                                        <div class="ip-prod-info"><span class="ip-prod-name">Knit Sweater</span><span class="ip-prod-price">₺890</span></div>
+                                    </div>
+                                    <div class="ip-product">
+                                        <div class="ip-prod-img" style="background:linear-gradient(145deg,#d4a574,#a67b5b)"></div>
+                                        <div class="ip-prod-fav">♡</div>
+                                        <div class="ip-prod-info"><span class="ip-prod-name">Suede Bag</span><span class="ip-prod-price">₺2,450</span></div>
+                                    </div>
+                                    <div class="ip-product">
+                                        <div class="ip-prod-img" style="background:linear-gradient(145deg,#e6caa8,#c8956c)"></div>
+                                        <div class="ip-prod-fav">♡</div>
+                                        <div class="ip-prod-info"><span class="ip-prod-name">Midi Skirt</span><span class="ip-prod-price">₺750</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ip-tab-bar">
+                                <div class="ip-tab"><span>🏠</span><small>Ana Sayfa</small></div>
+                                <div class="ip-tab"><span>🔍</span><small>Keşfet</small></div>
+                                <div class="ip-tab ip-tab-active"><span>👗</span><small>Stil</small></div>
+                                <div class="ip-tab"><span>♡</span><small>Favoriler</small></div>
+                                <div class="ip-tab"><span>👤</span><small>Profil</small></div>
+                            </div>
+                            <div class="ip-home-bar"></div>
+                        </div>
+                    </div>
+                    <div class="ps-badge ps-badge-2"><span>📱</span> App Store</div>
+                </div>
+                <div class="ps-info">
+                    <div class="ps-meta"><span class="meta-tag accent">Mobil Uygulama</span><span class="meta-tag">2026</span></div>
+                    <h3 class="ps-title">StyleUps App</h3>
+                    <p data-tr="StyleUps'ın mobil deneyimi — iOS ve Android. Kişiselleştirilmiş stil önerileri, kolay alışveriş ve sosyal özellikler." data-en="The StyleUps mobile experience — iOS and Android. Personalized style suggestions, easy shopping and social features.">StyleUps'ın mobil deneyimi — iOS ve Android. Kişiselleştirilmiş stil önerileri, kolay alışveriş ve sosyal özellikler.</p>
+                    <div class="tile-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>REST API</span></div>
+                    <div class="ps-metrics">
+                        <div class="metric-card"><div class="mc-val">4.8</div><div class="mc-lbl">Rating</div></div>
+                        <div class="metric-card"><div class="mc-val">50K+</div><div class="mc-lbl">Downloads</div></div>
+                        <div class="metric-card"><div class="mc-val">98%</div><div class="mc-lbl">Crash Free</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ═══════════════ PROCESS ═══════════════ -->
+    <section class="section" id="process">
+        <div class="container">
+            <div class="center-head">
+                <span class="eyebrow" data-tr="sürecimiz" data-en="our process">sürecimiz</span>
+                <h2 class="sec-title" data-tr="Nasıl <span class='glow-text'>çalışıyoruz</span>?" data-en="How do we <span class='glow-text'>work</span>?">Nasıl <span class="glow-text">çalışıyoruz</span>?</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-line"><div class="timeline-progress" id="timelineProgress"></div></div>
+                <div class="tl-step rv" data-d="0">
+                    <div class="tl-dot"><span>01</span></div>
+                    <div class="tl-card">
+                        <div class="tile-border"></div>
+                        <div class="tl-card-inner">
+                            <h3 data-tr="Keşif & Analiz" data-en="Discovery & Analysis">Keşif & Analiz</h3>
+                            <p data-tr="Projenizi ve hedeflerinizi derinlemesine analiz edip en uygun çözümü planlıyoruz." data-en="We deeply analyze your project and goals to plan the best solution.">Projenizi ve hedeflerinizi derinlemesine analiz edip en uygun çözümü planlıyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tl-step rv" data-d=".1">
+                    <div class="tl-dot"><span>02</span></div>
+                    <div class="tl-card">
+                        <div class="tile-border"></div>
+                        <div class="tl-card-inner">
+                            <h3 data-tr="Tasarım" data-en="Design">Tasarım</h3>
+                            <p data-tr="Wireframe ve prototiplerle vizyonunuzu görselleştiriyoruz." data-en="We visualize your vision with wireframes and prototypes.">Wireframe ve prototiplerle vizyonunuzu görselleştiriyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tl-step rv" data-d=".2">
+                    <div class="tl-dot"><span>03</span></div>
+                    <div class="tl-card">
+                        <div class="tile-border"></div>
+                        <div class="tl-card-inner">
+                            <h3 data-tr="Geliştirme" data-en="Development">Geliştirme</h3>
+                            <p data-tr="Modern teknolojilerle sprint bazlı sürekli ilerleme sağlıyoruz." data-en="We deliver continuous progress with modern technologies and sprint-based development.">Modern teknolojilerle sprint bazlı sürekli ilerleme sağlıyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tl-step rv" data-d=".3">
+                    <div class="tl-dot"><span>04</span></div>
+                    <div class="tl-card">
+                        <div class="tile-border"></div>
+                        <div class="tl-card-inner">
+                            <h3 data-tr="Lansman & Destek" data-en="Launch & Support">Lansman & Destek</h3>
+                            <p data-tr="Kapsamlı testlerden geçirip canlıya alıyor, sonrasında desteğe devam ediyoruz." data-en="We thoroughly test, launch, and continue to provide ongoing support.">Kapsamlı testlerden geçirip canlıya alıyor, sonrasında desteğe devam ediyoruz.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section class="section section--dark" id="contact">
+        <div class="container contact-grid">
+            <div class="contact-left rv">
+                <span class="eyebrow" data-tr="iletişim" data-en="contact">iletişim</span>
+                <h2 class="sec-title" data-tr="Bir fikriniz mi var?<br><span class='glow-text'>Konuşalım.</span>" data-en="Have an idea?<br><span class='glow-text'>Let's talk.</span>">Bir fikriniz mi var?<br><span class="glow-text">Konuşalım.</span></h2>
+                <p class="body-p" data-tr="Projenizi hayata geçirmek için buradayız. Birlikte harika şeyler yaratalım." data-en="We're here to bring your project to life. Let's create amazing things together.">Projenizi hayata geçirmek için buradayız. Birlikte harika şeyler yaratalım.</p>
+                <div class="contact-cards">
+                    <a href="mailto:hello@skymoonstudios.com" class="cc-item">
+                        <div class="tile-border"></div>
+                        <div class="cc-inner"><span class="cc-icon">✉️</span><div><small>Email</small><span>hello@skymoonstudios.com</span></div></div>
+                    </a>
+                    <div class="cc-item">
+                        <div class="tile-border"></div>
+                        <div class="cc-inner"><span class="cc-icon">📍</span><div><small>Konum</small><span>İstanbul, Türkiye</span></div></div>
+                    </div>
+                </div>
+                <div class="socials">
+                    <a href="#" class="soc-btn" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                    <a href="#" class="soc-btn" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                    <a href="#" class="soc-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="#" class="soc-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                </div>
+            </div>
+            <div class="contact-right rv" data-d=".12">
+                <form class="form-card" id="contactForm">
+                    <div class="tile-border"></div>
+                    <div class="form-inner">
+                        <div class="form-duo">
+                            <div class="field"><label data-tr="Adınız" data-en="Name">Adınız</label><input type="text" data-tr-ph="Adınızı girin" data-en-ph="Enter your name" placeholder="Adınızı girin" required></div>
+                            <div class="field"><label data-tr="Email" data-en="Email">Email</label><input type="email" placeholder="email@adres.com" required></div>
+                        </div>
+                        <div class="field"><label data-tr="Konu" data-en="Subject">Konu</label><input type="text" data-tr-ph="Proje hakkında" data-en-ph="About the project" placeholder="Proje hakkında" required></div>
+                        <div class="field"><label data-tr="Mesajınız" data-en="Your Message">Mesajınız</label><textarea rows="4" data-tr-ph="Projenizden bahsedin..." data-en-ph="Tell us about your project..." placeholder="Projenizden bahsedin..." required></textarea></div>
+                        <button type="submit" class="btn-glow btn-full"><span class="btn-glow-bg"></span><span class="btn-glow-text" data-tr="mesaj gönder →" data-en="send message →">mesaj gönder →</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="#hero" class="brand"><img src="skymoonstudioslogo.png" alt="Skymoon Studios" class="brand-logo"><span>skymoon <em>studios</em></span></a>
+                <p data-tr="hayalleri kodluyoruz." data-en="coding dreams.">hayalleri kodluyoruz.</p>
+            </div>
+            <div class="footer-cols">
+                <div class="f-col"><h4 data-tr="Şirket" data-en="Company">Şirket</h4><a href="#about" data-tr="Hakkımızda" data-en="About">Hakkımızda</a><a href="#services" data-tr="Hizmetler" data-en="Services">Hizmetler</a><a href="#work" data-tr="Projeler" data-en="Projects">Projeler</a></div>
+                <div class="f-col"><h4 data-tr="İletişim" data-en="Contact">İletişim</h4><a href="mailto:hello@skymoonstudios.com">Email</a><a href="#">Twitter / X</a><a href="#">LinkedIn</a></div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <span data-tr="© 2026 Skymoon Studios. Tüm hakları saklıdır." data-en="© 2026 Skymoon Studios. All rights reserved.">© 2026 Skymoon Studios. Tüm hakları saklıdır.</span>
+            <span data-tr="İstanbul'da ☾ ile yapıldı." data-en="Made with ☾ in Istanbul.">İstanbul'da ☾ ile yapıldı.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
