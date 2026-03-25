@@ -215,9 +215,6 @@
     document.querySelectorAll(".counter").forEach(span => {
         const target = parseInt(span.dataset.to) || 0;
         const parent = span.parentElement;
-        // Detect suffix after span (e.g. "+", "%")
-        const parentText = parent.textContent;
-        const suffix = parentText.replace(/[\d\s]/g, "").trim();
 
         ScrollTrigger.create({
             trigger: parent,
@@ -247,9 +244,12 @@
 
     /* ━━━ Smooth anchor scroll ━━━ */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
+        const href = a.getAttribute("href");
+        if (!href || href === "#") return;
+
         a.addEventListener("click", e => {
             e.preventDefault();
-            const target = document.querySelector(a.getAttribute("href"));
+            const target = document.querySelector(href);
             if (target) lenis.scrollTo(target, { offset: -60 });
             // close drawer
             const drawer = document.querySelector(".drawer");
@@ -415,17 +415,6 @@
             updateStarColors();
             // Smooth body transition
             document.body.style.transition = "background .5s, color .5s";
-        });
-    }
-
-    // Adjust star rendering for theme
-    const origDrawStars = null; // already in animation loop, just update colors dynamically
-    // Stars color adapts in the draw loop based on isDark — patch the draw:
-    // We override the star color in drawStars via a global
-    window._skymoonDark = isDark;
-    if (themeToggle) {
-        themeToggle.addEventListener("click", () => {
-            window._skymoonDark = isDark;
         });
     }
 
