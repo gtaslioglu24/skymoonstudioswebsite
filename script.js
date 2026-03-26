@@ -489,6 +489,8 @@
         video.autoplay = true;
         video.setAttribute("playsinline", "");
         video.setAttribute("webkit-playsinline", "");
+        video.style.visibility = "visible";
+        video.style.opacity = "1";
         video.style.backgroundColor = "#000";
 
         const container = video.parentElement;
@@ -498,6 +500,7 @@
         const startVideo = () => {
             if (!video || !container) return;
             try {
+                video.style.visibility = "visible";
                 if (video.paused) {
                     video.play().catch(err => {
                         if (videoAttempts < maxAttempts) {
@@ -529,6 +532,7 @@
         });
 
         video.addEventListener("loadedmetadata", () => {
+            video.style.visibility = "visible";
             skipFrame();
             startVideo();
         });

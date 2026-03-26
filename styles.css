@@ -568,7 +568,6 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     height: 100%;
     object-fit: cover;
     display: block !important;
-    visibility: hidden;
     background: #000;
 }
 
