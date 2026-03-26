@@ -565,7 +565,7 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
-    display: block !important;
+    display: none !important;
 }
 
 .bm-body img { width: 100%; display: block; transition: transform 8s cubic-bezier(.2,.8,.2,1); }
