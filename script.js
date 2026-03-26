@@ -488,24 +488,70 @@
         video.playsInline = true;
         video.autoplay = true;
         video.setAttribute("playsinline", "");
+        video.setAttribute("webkit-playsinline", "");
+
+        const container = video.parentElement;
+        const fallbackImg = container.querySelector(".bm-fallback-img");
+        let videoAttempts = 0;
+        const maxAttempts = 3;
 
         const startVideo = () => {
-            if (video.duration && video.currentTime < 0.8) {
-                try {
-                    video.currentTime = 0.8;
-                } catch (_) {}
-            }
-            video.play().catch(() => {});
+            if (!video || !container) return;
+            try {
+                if (video.paused) {
+                    video.play().catch(err => {
+                        if (videoAttempts < maxAttempts) {
+                            videoAttempts++;
+                            setTimeout(() => {
+                                if (video.paused) video.play().catch(() => {});
+                            }, 500);
+                        }
+                    });
+                }
+            } catch (_) {}
         };
 
-        if (video.readyState >= 2) {
-            startVideo();
-        } else {
-            video.addEventListener("canplay", startVideo, { once: true });
-            video.addEventListener("loadedmetadata", startVideo, { once: true });
-        }
+        const skipFrame = () => {
+            try {
+                if (video.duration > 0 && video.currentTime < 0.5) {
+                    video.currentTime = Math.max(0.1, Math.min(0.5, video.duration * 0.08));
+                }
+            } catch (_) {}
+        };
 
-        document.addEventListener("touchstart", startVideo, { passive: true, once: true });
+        setTimeout(() => {
+            skipFrame();
+            startVideo();
+        }, 150);
+
+        video.addEventListener("canplay", () => {
+            if (fallbackImg) fallbackImg.style.display = "none";
+            video.style.display = "block";
+            skipFrame();
+            startVideo();
+        });
+
+        video.addEventListener("loadedmetadata", () => {
+            skipFrame();
+            startVideo();
+        });
+
+        video.addEventListener("error", () => {
+            console.warn("Video error: " + video.src);
+            if (fallbackImg) fallbackImg.style.display = "block";
+            video.style.display = "none";
+        });
+
+        video.addEventListener("stalled", () => {
+            skipFrame();
+            startVideo();
+        });
+
+        const touchHandler = () => {
+            skipFrame();
+            startVideo();
+        };
+        document.addEventListener("touchstart", touchHandler, { passive: true });
     });
 
     window.addEventListener("beforeunload", () => clearInterval(shooterInterval), { once: true });
