@@ -484,10 +484,17 @@
 
     document.querySelectorAll(".bm-video").forEach(video => {
         video.muted = true;
+        video.defaultMuted = true;
         video.playsInline = true;
+        video.autoplay = true;
         video.setAttribute("playsinline", "");
 
         const startVideo = () => {
+            if (video.duration && video.currentTime < 0.8) {
+                try {
+                    video.currentTime = 0.8;
+                } catch (_) {}
+            }
             video.play().catch(() => {});
         };
 
