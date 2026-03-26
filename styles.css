@@ -558,7 +558,16 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     box-shadow: 0 24px 60px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.04);
     position: relative;
 }
-.bm-body { overflow: hidden; line-height: 0; position: relative; aspect-ratio: 16 / 9; background: #060504; }
+.bm-body { overflow: hidden; line-height: 0; position: relative; aspect-ratio: 16 / 9; background: #000; min-height: 200px; }
+.bm-fallback-img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
 .bm-body img { width: 100%; display: block; transition: transform 8s cubic-bezier(.2,.8,.2,1); }
 .browser-mock:hover .bm-body img { transform: translateY(-25%); }
 .bm-video {
@@ -567,7 +576,9 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    display: block !important;
+    visibility: hidden;
+    background: #000;
 }
 
 /* MacBook 3D Wrap */

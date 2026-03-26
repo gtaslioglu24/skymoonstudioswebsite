@@ -489,11 +489,30 @@
         video.autoplay = true;
         video.setAttribute("playsinline", "");
         video.setAttribute("webkit-playsinline", "");
+        video.style.visibility = "hidden";
+        video.style.backgroundColor = "#000";
 
         const container = video.parentElement;
         const fallbackImg = container.querySelector(".bm-fallback-img");
         let videoAttempts = 0;
         const maxAttempts = 3;
+        let videoLoaded = false;
+
+        const showVideo = () => {
+            if (video && !videoLoaded) {
+                videoLoaded = true;
+                video.style.visibility = "visible";
+                if (fallbackImg) fallbackImg.style.display = "none";
+            }
+        };
+
+        const showFallback = () => {
+            if (fallbackImg) {
+                fallbackImg.style.display = "block";
+                video.style.visibility = "hidden";
+                videoLoaded = false;
+            }
+        };
 
         const startVideo = () => {
             if (!video || !container) return;
@@ -525,21 +544,25 @@
         }, 150);
 
         video.addEventListener("canplay", () => {
-            if (fallbackImg) fallbackImg.style.display = "none";
-            video.style.display = "block";
+            showVideo();
             skipFrame();
             startVideo();
         });
 
+        video.addEventListener("playing", () => {
+            showVideo();
+            skipFrame();
+        });
+
         video.addEventListener("loadedmetadata", () => {
+            showVideo();
             skipFrame();
             startVideo();
         });
 
         video.addEventListener("error", () => {
             console.warn("Video error: " + video.src);
-            if (fallbackImg) fallbackImg.style.display = "block";
-            video.style.display = "none";
+            showFallback();
         });
 
         video.addEventListener("stalled", () => {
