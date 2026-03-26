@@ -38,6 +38,7 @@
     --out: cubic-bezier(.22, 1, .36, 1);
 
     --nav-h: 72px;
+    color-scheme: dark;
 }
 
 /* ── Light Theme ── */
@@ -58,6 +59,7 @@
 
     --glow: rgba(166, 123, 91, .2);
     --glow2: rgba(166, 123, 91, .12);
+    color-scheme: light;
 }
 [data-theme="light"] .section--dark { background: var(--bg2); }
 [data-theme="light"] .grain { opacity: .015; }
@@ -514,7 +516,7 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
         linear-gradient(135deg, rgba(166,123,91,.22), rgba(212,165,116,.12));
     border-color: rgba(140,106,80,.48);
 }
-.tile-num { font-family: var(--ff); font-size: .72rem; color: var(--dim); font-weight: 300; }
+.tile-num { display: none; }
 .tile-content h3 { font-family: var(--ff); font-size: 1.2rem; margin-bottom: .6rem; font-weight: 500; }
 .tile-content p { font-size: .86rem; color: var(--text2); line-height: 1.75; margin-bottom: 1rem; font-weight: 300; }
 .tile-tags { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -556,10 +558,17 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     box-shadow: 0 24px 60px rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.04);
     position: relative;
 }
-.bm-body { overflow: hidden; line-height: 0; }
+.bm-body { overflow: hidden; line-height: 0; position: relative; aspect-ratio: 16 / 9; background: #060504; }
 .bm-body img { width: 100%; display: block; transition: transform 8s cubic-bezier(.2,.8,.2,1); }
 .browser-mock:hover .bm-body img { transform: translateY(-25%); }
-.bm-video { width: 100%; display: block; }
+.bm-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
 /* MacBook 3D Wrap */
 .macbook-wrap {
@@ -778,7 +787,14 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     .project-showcase { grid-template-columns: 1fr; padding: 1.4rem; }
     .project-showcase--flip .ps-visual { order: 0; }
     .project-showcase--flip .ps-info { order: 0; }
+    .macbook-wrap { width: 100%; max-width: 560px; margin: 0 auto; }
+    .macbook-screen { transform: none; }
+    .macbook-wrap:hover .macbook-screen { transform: none; }
+    .macbook-base, .macbook-shadow { width: 100%; }
+    .browser-mock { border-radius: 20px; }
     .phone-mock { width: 200px; }
+    .ps-badge-1 { right: 12px; bottom: 12px; }
+    .ps-badge-2 { right: 12px; top: 12px; }
 }
 
 /* ── MARQUEE ── */

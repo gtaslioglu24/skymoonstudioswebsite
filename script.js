@@ -442,6 +442,11 @@
             document.documentElement.setAttribute("data-theme", "light");
             isDark = false;
             updateStarColors();
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+            isDark = true;
+            if (!saved) localStorage.setItem("skymoon-theme", "dark");
+            updateStarColors();
         }
 
         themeToggle.addEventListener("click", () => {
