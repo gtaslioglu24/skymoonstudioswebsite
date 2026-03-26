@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skymoon Studios — Hayalleri Kodluyoruz</title>
     <meta name="description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'">
     <link rel="icon" type="image/png" href="skymoonstudioslogo.png">
     <link rel="shortcut icon" type="image/png" href="skymoonstudioslogo.png">
     <link rel="apple-touch-icon" href="skymoonstudioslogo.png">
@@ -12,12 +13,12 @@
     <meta property="og:site_name" content="Skymoon Studios">
     <meta property="og:title" content="Skymoon Studios — Hayalleri Kodluyoruz">
     <meta property="og:description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
-    <meta property="og:image" content="skymoonstudioslogo.png">
+    <meta property="og:image" content="/skymoonstudioslogo.png">
     <meta property="og:image:alt" content="Skymoon Studios Logo">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Skymoon Studios — Hayalleri Kodluyoruz">
     <meta name="twitter:description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
-    <meta name="twitter:image" content="skymoonstudioslogo.png">
+    <meta name="twitter:image" content="/skymoonstudioslogo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -154,7 +155,16 @@
                     <div class="tile-shine"></div>
                     <div class="tile-content">
                         <div class="tile-head">
-                            <span class="tile-icon">💻</span>
+                            <span class="tile-icon" aria-hidden="true">
+                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4 6C4 4.89543 4.89543 4 6 4H18C19.1046 4 20 4.89543 20 6V15C20 16.1046 19.1046 17 18 17H6C4.89543 17 4 16.1046 4 15V6Z" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <path d="M4 8H20" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <circle cx="7" cy="6" r="1.25" fill="currentColor"/>
+                                    <circle cx="10.5" cy="6" r="1.25" fill="currentColor"/>
+                                    <path d="M9 21H15C15.5523 21 16 20.5523 16 20H8C8 20.5523 8.44772 21 9 21Z" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 17V20" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+                                </svg>
+                            </span>
                             <span class="tile-num">01</span>
                         </div>
                         <h3 data-tr="Web Geliştirme" data-en="Web Development">Web Geliştirme</h3>
@@ -168,7 +178,14 @@
                     <div class="tile-shine"></div>
                     <div class="tile-content">
                         <div class="tile-head">
-                            <span class="tile-icon">📱</span>
+                            <span class="tile-icon" aria-hidden="true">
+                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="6" y="2" width="12" height="20" rx="3.5" stroke="currentColor" stroke-width="1.65"/>
+                                    <path d="M10 2.5H14" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+                                    <rect x="8.5" y="7" width="7" height="6" rx="1.5" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <path d="M12 18.25C12.6904 18.25 13.25 17.6904 13.25 17C13.25 16.3096 12.6904 15.75 12 15.75C11.3096 15.75 10.75 16.3096 10.75 17C10.75 17.6904 11.3096 18.25 12 18.25Z" fill="currentColor"/>
+                                </svg>
+                            </span>
                             <span class="tile-num">02</span>
                         </div>
                         <h3 data-tr="Mobil Uygulama" data-en="Mobile App">Mobil Uygulama</h3>
@@ -182,7 +199,17 @@
                     <div class="tile-shine"></div>
                     <div class="tile-content">
                         <div class="tile-head">
-                            <span class="tile-icon">🎨</span>
+                            <span class="tile-icon" aria-hidden="true">
+                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="4" y="4" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <rect x="14" y="14" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <path d="M17 14V8.5C17 7.11929 15.8807 6 14.5 6H10" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 10V15.5C7 16.8807 8.11929 18 9.5 18H14" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="17" cy="6" r="1.5" fill="currentColor"/>
+                                    <circle cx="7" cy="18" r="1.5" fill="currentColor"/>
+                                    <circle cx="4" cy="4" r="1" fill="currentColor"/>
+                                </svg>
+                            </span>
                             <span class="tile-num">03</span>
                         </div>
                         <h3 data-tr="UI/UX Tasarım" data-en="UI/UX Design">UI/UX Tasarım</h3>
@@ -196,7 +223,16 @@
                     <div class="tile-shine"></div>
                     <div class="tile-content">
                         <div class="tile-head">
-                            <span class="tile-icon">⚙️</span>
+                            <span class="tile-icon" aria-hidden="true">
+                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                                    <rect x="3" y="6" width="18" height="12" rx="2.5" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
+                                    <path d="M8 6V18" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+                                    <path d="M11 10H16" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+                                    <path d="M11 14H14" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
+                                    <circle cx="5.5" cy="9.5" r="1.25" fill="currentColor"/>
+                                    <circle cx="5.5" cy="14.5" r="1.25" fill="currentColor"/>
+                                </svg>
+                            </span>
                             <span class="tile-num">04</span>
                         </div>
                         <h3 data-tr="Backend & API" data-en="Backend & API">Backend & API</h3>
@@ -252,7 +288,7 @@
                     <div class="ps-glow"></div>
                     <div class="iphone-mock">
                         <div class="ip-screen">
-                            <img src="StyleUpSphotonew.jpg" alt="StyleUpS App" class="ip-screenshot">
+                            <img src="StyleUpSphotonew.jpg" alt="StyleUpS App" class="ip-screenshot" loading="lazy" decoding="async">
                         </div>
                     </div>
                     <div class="ps-badge ps-badge-2"><span>📱</span> App Store</div>
@@ -377,7 +413,6 @@
         </div>
         <div class="container footer-bottom">
             <span data-tr="© 2026 Skymoon Studios. Tüm hakları saklıdır." data-en="© 2026 Skymoon Studios. All rights reserved.">© 2026 Skymoon Studios. Tüm hakları saklıdır.</span>
-            <span data-tr="İstanbul'da ☾ ile yapıldı." data-en="Made with ☾ in Istanbul.">İstanbul'da ☾ ile yapıldı.</span>
         </div>
     </footer>
 

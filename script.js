@@ -7,18 +7,23 @@
 
     /* ━━━ Canvas Starfield & Shooting Stars ━━━ */
     const canvas = document.getElementById("starfield");
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let W, H;
 
     function resize() {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
+        W = window.innerWidth;
+        H = window.innerHeight;
+        if (canvas) {
+            canvas.width = W;
+            canvas.height = H;
+        }
     }
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", resize, { passive: true });
 
     // Stars
-    const STAR_COUNT = 220;
+    const STAR_COUNT = prefersReducedMotion ? 90 : 220;
     const stars = [];
     for (let i = 0; i < STAR_COUNT; i++) {
         stars.push({
@@ -48,9 +53,10 @@
         });
     }
     // occasional shooters
-    setInterval(() => {
+    const shooterInterval = setInterval(() => {
+        if (!ctx || prefersReducedMotion) return;
         if (shootingStars.length < 3 && Math.random() > 0.3) spawnShooter();
-    }, 1800);
+    }, prefersReducedMotion ? 3200 : 1800);
 
     // Nebula / soft glow spots
     const nebulae = [
@@ -59,7 +65,14 @@
         { x: 0.5, y: 0.75, r: 350, color: "rgba(166,123,91,0.01)" },
     ];
 
-    function drawStars(time) {
+    function drawStars() {
+        if (!ctx || !canvas) return;
+
+        if (document.hidden) {
+            requestAnimationFrame(drawStars);
+            return;
+        }
+
         ctx.clearRect(0, 0, W, H);
 
         // draw nebulae
@@ -139,7 +152,7 @@
 
         requestAnimationFrame(drawStars);
     }
-    requestAnimationFrame(drawStars);
+    if (ctx && canvas) requestAnimationFrame(drawStars);
 
     /* ━━━ Custom Cursor ━━━ */
     let currentLang = localStorage.getItem("skymoon-lang") || "tr";
@@ -148,9 +161,13 @@
     const aura = document.querySelector(".cursor-aura");
     let mx = -100, my = -100, cx = -100, cy = -100, ax = -100, ay = -100;
 
-    if (cursor && aura) {
+    if (cursor && aura && !prefersReducedMotion) {
         window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
         (function moveCursor() {
+            if (document.hidden) {
+                requestAnimationFrame(moveCursor);
+                return;
+            }
             cx += (mx - cx) * 0.2;
             cy += (my - cy) * 0.2;
             ax += (mx - ax) * 0.08;
@@ -162,13 +179,20 @@
     }
 
     /* ━━━ Lenis ━━━ */
-    const lenis = new Lenis({ duration: 1.3, easing: t => 1 - Math.pow(1 - t, 4), smooth: true });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+    const lenis = typeof Lenis !== "undefined"
+        ? new Lenis({ duration: prefersReducedMotion ? 0.9 : 1.3, easing: t => 1 - Math.pow(1 - t, 4), smooth: !prefersReducedMotion })
+        : null;
+    if (lenis) {
+        function raf(time) {
+            if (!document.hidden) lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    }
 
     /* ━━━ GSAP Setup ━━━ */
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-    lenis.on("scroll", ScrollTrigger.update);
+    if (lenis) lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.lagSmoothing(0);
 
     /* ━━━ Preloader ━━━ */
@@ -176,12 +200,12 @@
     const preTL = gsap.timeline({
         onComplete() {
             preloader.style.pointerEvents = "none";
-            lenis.start();
+            if (lenis) lenis.start();
             animateHero();
         }
     });
 
-    lenis.stop();
+    if (lenis) lenis.stop();
 
     preTL
         .to(".pre-ring circle", { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut" })
@@ -234,13 +258,13 @@
 
     /* ━━━ Navbar ━━━ */
     const nav = document.querySelector(".nav");
-    let lastScroll = 0;
-    window.addEventListener("scroll", () => {
-        const s = window.scrollY;
-        if (s > 60) nav.classList.add("scrolled");
-        else nav.classList.remove("scrolled");
-        lastScroll = s;
-    });
+    if (nav) {
+        window.addEventListener("scroll", () => {
+            const s = window.scrollY;
+            if (s > 60) nav.classList.add("scrolled");
+            else nav.classList.remove("scrolled");
+        }, { passive: true });
+    }
 
     /* ━━━ Smooth anchor scroll ━━━ */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -250,7 +274,10 @@
         a.addEventListener("click", e => {
             e.preventDefault();
             const target = document.querySelector(href);
-            if (target) lenis.scrollTo(target, { offset: -60 });
+            if (target) {
+                if (lenis) lenis.scrollTo(target, { offset: -60 });
+                else target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+            }
             // close drawer
             const drawer = document.querySelector(".drawer");
             const burger = document.querySelector(".burger");
@@ -284,25 +311,35 @@
             l.classList.remove("active");
             if (l.getAttribute("href") === `#${current}`) l.classList.add("active");
         });
-    });
+    }, { passive: true });
 
     /* ━━━ Service Tile Tilt + Shine ━━━ */
     document.querySelectorAll(".service-tile").forEach(tile => {
         const shine = tile.querySelector(".tile-shine");
-        tile.addEventListener("mousemove", e => {
-            const rect = tile.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const px = x / rect.width;
-            const py = y / rect.height;
-            const rx = (py - 0.5) * 10;
-            const ry = (px - 0.5) * -10;
-            tile.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
-            if (shine) {
-                shine.style.left = `${px * 100 - 30}%`;
-                shine.style.transition = "none";
-            }
-        });
+        if (!prefersReducedMotion) {
+            let rafId = null;
+            let lastEvent = null;
+            tile.addEventListener("mousemove", e => {
+                lastEvent = e;
+                if (rafId) return;
+
+                rafId = requestAnimationFrame(() => {
+                    const rect = tile.getBoundingClientRect();
+                    const x = lastEvent.clientX - rect.left;
+                    const y = lastEvent.clientY - rect.top;
+                    const px = x / rect.width;
+                    const py = y / rect.height;
+                    const rx = (py - 0.5) * 10;
+                    const ry = (px - 0.5) * -10;
+                    tile.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
+                    if (shine) {
+                        shine.style.left = `${px * 100 - 30}%`;
+                        shine.style.transition = "none";
+                    }
+                    rafId = null;
+                });
+            });
+        }
         tile.addEventListener("mouseleave", () => {
             tile.style.transform = "";
             if (shine) shine.style.left = "-100%";
@@ -311,6 +348,7 @@
 
     /* ━━━ Magnetic Buttons ━━━ */
     document.querySelectorAll(".btn-glow, .nav-cta").forEach(btn => {
+        if (prefersReducedMotion) return;
         btn.addEventListener("mousemove", e => {
             const rect = btn.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
@@ -374,14 +412,17 @@
     }
 
     /* ━━━ Extra: Parallax depth for hero ━━━ */
-    window.addEventListener("mousemove", e => {
-        const x = (e.clientX / W - 0.5) * 2;
-        const y = (e.clientY / H - 0.5) * 2;
-        document.querySelectorAll(".orbit-ring").forEach((ring, i) => {
-            const factor = (i + 1) * 6;
-            ring.style.transform = `translate(calc(-50% + ${x * factor}px), calc(-50% + ${y * factor}px))`;
-        });
-    });
+    const orbitRings = document.querySelectorAll(".orbit-ring");
+    if (!prefersReducedMotion && orbitRings.length) {
+        window.addEventListener("mousemove", e => {
+            const x = (e.clientX / W - 0.5) * 2;
+            const y = (e.clientY / H - 0.5) * 2;
+            orbitRings.forEach((ring, i) => {
+                const factor = (i + 1) * 6;
+                ring.style.transform = `translate(calc(-50% + ${x * factor}px), calc(-50% + ${y * factor}px))`;
+            });
+        }, { passive: true });
+    }
 
     /* ━━━ Dark / Light Theme Toggle ━━━ */
     const themeToggle = document.getElementById("themeToggle");
@@ -422,18 +463,21 @@
     const langToggle = document.getElementById("langToggle");
 
     if (langToggle) {
+        const langLabel = langToggle.querySelector(".lang-label");
         if (currentLang === "en") {
-            langToggle.querySelector(".lang-label").textContent = "TR";
+            if (langLabel) langLabel.textContent = "TR";
             applyLanguage("en");
         }
 
         langToggle.addEventListener("click", () => {
             currentLang = currentLang === "tr" ? "en" : "tr";
-            langToggle.querySelector(".lang-label").textContent = currentLang === "tr" ? "EN" : "TR";
+            if (langLabel) langLabel.textContent = currentLang === "tr" ? "EN" : "TR";
             localStorage.setItem("skymoon-lang", currentLang);
             applyLanguage(currentLang);
         });
     }
+
+    window.addEventListener("beforeunload", () => clearInterval(shooterInterval), { once: true });
 
     function applyLanguage(lang) {
         // Update all elements with data-tr / data-en

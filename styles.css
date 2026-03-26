@@ -461,7 +461,59 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
 
 .tile-content { position: relative; padding: 2rem; z-index: 1; }
 .tile-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
-.tile-icon { font-size: 2rem; }
+.tile-icon {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background:
+        radial-gradient(circle at 30% 28%, rgba(245,237,227,.16), transparent 34%),
+        linear-gradient(135deg, rgba(212,165,116,.22), rgba(140,106,80,.20));
+    border: 1.5px solid rgba(212,165,116,.5);
+    box-shadow:
+        inset 0 1px 0 rgba(245,237,227,.12),
+        inset 0 -10px 18px rgba(0,0,0,.08),
+        0 8px 20px rgba(0,0,0,.22);
+    transition: transform .35s var(--out), background .35s var(--out), border-color .35s var(--out), box-shadow .35s var(--out);
+    position: relative;
+    color: #E6D5C3;
+}
+.tile-icon-svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    filter: drop-shadow(0 0 6px rgba(212,165,116,.12));
+}
+[data-theme="light"] .tile-icon { color: #8C6A50; }
+[data-theme="light"] .tile-icon {
+    background:
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,.44), transparent 34%),
+        linear-gradient(135deg, rgba(166,123,91,.16), rgba(212,165,116,.08));
+    border-color: rgba(140,106,80,.34);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.42),
+        inset 0 -10px 18px rgba(0,0,0,.04),
+        0 6px 14px rgba(120,100,80,.12);
+}
+.service-tile:hover .tile-icon {
+    transform: translateY(-2px) scale(1.02);
+    background:
+        radial-gradient(circle at 30% 28%, rgba(245,237,227,.22), transparent 34%),
+        linear-gradient(135deg, rgba(212,165,116,.34), rgba(140,106,80,.28));
+    border-color: rgba(230,213,195,.72);
+    box-shadow:
+        inset 0 1px 0 rgba(245,237,227,.14),
+        inset 0 -10px 18px rgba(0,0,0,.06),
+        0 12px 26px rgba(0,0,0,.26);
+}
+[data-theme="light"] .service-tile:hover .tile-icon {
+    background:
+        radial-gradient(circle at 30% 28%, rgba(255,255,255,.5), transparent 34%),
+        linear-gradient(135deg, rgba(166,123,91,.22), rgba(212,165,116,.12));
+    border-color: rgba(140,106,80,.48);
+}
 .tile-num { font-family: var(--ff); font-size: .72rem; color: var(--dim); font-weight: 300; }
 .tile-content h3 { font-family: var(--ff); font-size: 1.2rem; margin-bottom: .6rem; font-weight: 500; }
 .tile-content p { font-size: .86rem; color: var(--text2); line-height: 1.75; margin-bottom: 1rem; font-weight: 300; }
@@ -840,4 +892,19 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     .stat-sep { display: none; }
     .stats-row { gap: 1.2rem; }
     .form-inner { padding: 1.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .tile-shine,
+    .orbit-ring,
+    .cursor,
+    .cursor-aura {
+        display: none !important;
+    }
 }
