@@ -497,16 +497,15 @@
         video.style.opacity = "1";
         video.style.backgroundColor = "#000";
 
-        const container = video.parentElement;
         let videoAttempts = 0;
         const maxAttempts = 3;
+        let playbackStarted = false;
 
         const startVideo = () => {
-            if (!video || !container) return;
+            if (!video) return;
             try {
                 video.style.visibility = "visible";
-                video.load();
-                if (video.paused) {
+                if (!playbackStarted && video.paused) {
                     video.play().catch(err => {
                         if (videoAttempts < maxAttempts) {
                             videoAttempts++;
@@ -514,6 +513,8 @@
                                 if (video.paused) video.play().catch(() => {});
                             }, 500);
                         }
+                    }).then(() => {
+                        playbackStarted = true;
                     });
                 }
             } catch (_) {}
@@ -533,6 +534,7 @@
         }, 150);
 
         video.addEventListener("playing", () => {
+            playbackStarted = true;
             skipFrame();
         });
 
@@ -552,12 +554,6 @@
             skipFrame();
             startVideo();
         });
-
-        const touchHandler = () => {
-            skipFrame();
-            startVideo();
-        };
-        document.addEventListener("touchstart", touchHandler, { passive: true });
     });
 
     window.addEventListener("beforeunload", () => clearInterval(shooterInterval), { once: true });
