@@ -791,6 +791,13 @@ body:has(a:hover) .cursor-aura, body:has(button:hover) .cursor-aura { width: 56p
     .macbook-wrap { width: 100%; max-width: 560px; margin: 0 auto; }
     .macbook-screen { transform: none; }
     .macbook-wrap:hover .macbook-screen { transform: none; }
+    .macbook-wrap { perspective: none; }
+    .macbook-wrap, .macbook-screen, .browser-mock, .bm-body, .bm-video {
+        transform: none !important;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    .bm-body { min-height: 0; aspect-ratio: 16 / 9; }
     .macbook-base, .macbook-shadow { width: 100%; }
     .browser-mock { border-radius: 20px; }
     .phone-mock { width: 200px; }
