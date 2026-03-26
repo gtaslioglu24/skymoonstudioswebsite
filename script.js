@@ -482,6 +482,25 @@
         });
     }
 
+    document.querySelectorAll(".bm-video").forEach(video => {
+        video.muted = true;
+        video.playsInline = true;
+        video.setAttribute("playsinline", "");
+
+        const startVideo = () => {
+            video.play().catch(() => {});
+        };
+
+        if (video.readyState >= 2) {
+            startVideo();
+        } else {
+            video.addEventListener("canplay", startVideo, { once: true });
+            video.addEventListener("loadedmetadata", startVideo, { once: true });
+        }
+
+        document.addEventListener("touchstart", startVideo, { passive: true, once: true });
+    });
+
     window.addEventListener("beforeunload", () => clearInterval(shooterInterval), { once: true });
 
     function applyLanguage(lang) {
