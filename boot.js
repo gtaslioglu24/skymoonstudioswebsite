@@ -4,8 +4,15 @@
     var root = document.documentElement;
     root.classList.add("js");
     try {
+        // A visitor who picked a language with the TR/EN switch lands on that page next time.
+        // Only an explicit choice redirects, so search engines always see both pages as they are.
+        var saved = localStorage.getItem("skymoon-lang");
+        var here = root.getAttribute("lang") === "en" ? "en" : "tr";
+        if ((saved === "en" || saved === "tr") && saved !== here) {
+            location.replace((saved === "en" ? "/en/" : "/") + location.search + location.hash);
+            return;
+        }
         if (localStorage.getItem("skymoon-theme") === "light") root.setAttribute("data-theme", "light");
-        if (localStorage.getItem("skymoon-lang") === "en") root.setAttribute("lang", "en");
         if (sessionStorage.getItem("skymoon-intro")) root.classList.add("intro-seen");
     } catch (_) { /* storage blocked — defaults apply */ }
 })();

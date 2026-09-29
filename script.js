@@ -14,7 +14,7 @@
         set(key, value) { try { localStorage.setItem(key, value); } catch (_) { /* storage blocked */ } },
     };
 
-    let currentLang = store.get("skymoon-lang") === "en" ? "en" : "tr";
+    const currentLang = root.lang === "en" ? "en" : "tr";
 
     /* ━━━ Starfield ━━━ */
     const canvas = document.getElementById("starfield");
@@ -68,7 +68,7 @@
 
     function drawStars() {
         if (!ctx) return;
-        if (document.hidden) { requestAnimationFrame(drawStars); return; }
+        if (document.hidden) { if (!reduceMotion) requestAnimationFrame(drawStars); return; }
         ctx.clearRect(0, 0, W, H);
 
         const light = root.getAttribute("data-theme") === "light";
@@ -115,13 +115,18 @@
             ctx.stroke();
             if (ss.life >= ss.maxLife) shooters.splice(i, 1);
         }
-        requestAnimationFrame(drawStars);
+        // With reduced motion the sky is static: draw once, redraw on resize/theme change
+        if (!reduceMotion) requestAnimationFrame(drawStars);
     }
     if (ctx) requestAnimationFrame(drawStars);
+    if (ctx && reduceMotion) {
+        window.addEventListener("resize", () => requestAnimationFrame(drawStars), { passive: true });
+        new MutationObserver(() => requestAnimationFrame(drawStars)).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    }
 
     /* ━━━ Smooth scroll (Lenis, optional) ━━━ */
     const lenis = (typeof Lenis !== "undefined" && !reduceMotion)
-        ? new Lenis({ duration: 1.15, easing: t => 1 - Math.pow(1 - t, 4) })
+        ? new Lenis({ duration: .9, easing: t => 1 - Math.pow(1 - t, 4) })
         : null;
     if (lenis) {
         const raf = time => { lenis.raf(time); requestAnimationFrame(raf); };
@@ -139,8 +144,8 @@
         try { sessionStorage.setItem("skymoon-intro", "1"); } catch (_) { /* ignore */ }
         setTimeout(() => {
             preloader.classList.add("done");
-            setTimeout(reveal, 250);
-        }, reduceMotion ? 200 : 1500);
+            setTimeout(reveal, 150);
+        }, reduceMotion ? 150 : 700);
     } else {
         requestAnimationFrame(() => requestAnimationFrame(reveal));
     }
@@ -220,24 +225,27 @@
         });
     });
 
-    /* ━━━ Custom cursor ━━━ */
-    const cursor = document.querySelector(".cursor");
+    /* ━━━ Cursor aura: trails the (still visible) system cursor ━━━ */
     const aura = document.querySelector(".cursor-aura");
-    if (cursor && aura && finePointer && !reduceMotion) {
+    if (aura && finePointer && !reduceMotion) {
         root.classList.add("has-cursor");
-        let mx = -100, my = -100, cx = -100, cy = -100, ax = -100, ay = -100;
-        window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+        let mx = 0, my = 0, ax = 0, ay = 0, running = false;
+        function loop() {
+            ax += (mx - ax) * 0.2; ay += (my - ay) * 0.2;
+            aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
+            // Sleep once the aura has caught up; the next mousemove wakes it
+            if (Math.abs(mx - ax) > 0.1 || Math.abs(my - ay) > 0.1) requestAnimationFrame(loop);
+            else running = false;
+        }
+        window.addEventListener("mousemove", e => {
+            if (!root.classList.contains("cursor-on")) { ax = e.clientX; ay = e.clientY; root.classList.add("cursor-on"); }
+            mx = e.clientX; my = e.clientY;
+            if (!running) { running = true; requestAnimationFrame(loop); }
+        }, { passive: true });
         document.addEventListener("mouseover", e => {
             root.classList.toggle("cursor-hover", !!e.target.closest("a, button, .tile"));
         });
-        document.addEventListener("mouseleave", () => { mx = my = -100; });
-        (function loop() {
-            cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35;
-            ax += (mx - ax) * 0.14; ay += (my - ay) * 0.14;
-            cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-            aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
-            requestAnimationFrame(loop);
-        })();
+        document.documentElement.addEventListener("mouseleave", () => root.classList.remove("cursor-on"));
     }
 
     /* ━━━ Spotlight on service tiles ━━━ */
@@ -319,11 +327,27 @@
     /* ━━━ Video autoplay (iOS-safe) ━━━ */
     document.querySelectorAll(".p-video").forEach(video => {
         video.muted = true;
+        video.defaultMuted = true;
         video.playsInline = true;
-        const tryPlay = () => { const p = video.play(); if (p) p.catch(() => {}); };
+        video.setAttribute("muted", "");
+        let inView = !("IntersectionObserver" in window);
+        const tryPlay = () => {
+            if (!inView || !video.paused) return;
+            const p = video.play();
+            if (p) p.catch(() => {});
+        };
+        // Safari (e.g. Low Power Mode) may refuse autoplay: retry once data is
+        // ready, and on the visitor's first touch or click anywhere on the page.
+        video.addEventListener("canplay", tryPlay);
+        const onGesture = () => {
+            tryPlay();
+            if (!video.paused) ["touchend", "click", "keydown"].forEach(t => document.removeEventListener(t, onGesture));
+        };
+        ["touchend", "click", "keydown"].forEach(t => document.addEventListener(t, onGesture, { passive: true }));
         if ("IntersectionObserver" in window) {
             new IntersectionObserver(([entry]) => {
-                if (entry.isIntersecting) tryPlay(); else video.pause();
+                inView = entry.isIntersecting;
+                if (inView) tryPlay(); else video.pause();
             }, { threshold: 0.2 }).observe(video);
         } else {
             tryPlay();
@@ -389,33 +413,12 @@
         });
     }
 
-    /* ━━━ Language toggle ━━━ */
-    const TITLES = {
-        tr: "Skymoon Studios — Dijital Ürün Stüdyosu",
-        en: "Skymoon Studios — Digital Product Studio",
-    };
-
-    function applyLanguage(lang) {
-        root.setAttribute("lang", lang);
-        document.querySelectorAll("[data-tr][data-en]").forEach(el => {
-            const text = el.getAttribute(`data-${lang}`);
-            if (text !== null && el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") el.innerHTML = text;
-        });
-        document.querySelectorAll(`[data-${lang}-ph]`).forEach(el => { el.placeholder = el.getAttribute(`data-${lang}-ph`); });
-        document.querySelectorAll(`[data-${lang}-aria]`).forEach(el => { el.setAttribute("aria-label", el.getAttribute(`data-${lang}-aria`)); });
-        document.querySelectorAll(`[data-${lang}-alt]`).forEach(el => { el.alt = el.getAttribute(`data-${lang}-alt`); });
-        const langBtn = document.getElementById("langToggle");
-        if (langBtn) langBtn.textContent = lang === "tr" ? "EN" : "TR";
-        document.title = TITLES[lang];
-    }
-
+    /* ━━━ Language switch ━━━
+       Each language is its own page (/ and /en/, en/ is built by build-en.mjs).
+       The switch is a plain link; we only remember the choice so boot.js can
+       send a returning visitor straight to their language. */
     const langToggle = document.getElementById("langToggle");
-    if (currentLang === "en") applyLanguage("en");
     if (langToggle) {
-        langToggle.addEventListener("click", () => {
-            currentLang = currentLang === "tr" ? "en" : "tr";
-            store.set("skymoon-lang", currentLang);
-            applyLanguage(currentLang);
-        });
+        langToggle.addEventListener("click", () => store.set("skymoon-lang", currentLang === "tr" ? "en" : "tr"));
     }
 })();

@@ -120,29 +120,24 @@ main, .footer { position: relative; z-index: var(--z-content); }
 }
 [data-theme="light"] .grain { opacity: .03; }
 
-/* ── Custom cursor (fine pointers only, enabled by JS) ── */
-.cursor, .cursor-aura { display: none; }
-.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
-.has-cursor input, .has-cursor textarea { cursor: text; }
-.has-cursor .cursor, .has-cursor .cursor-aura {
+/* ── Cursor aura (fine pointers only, enabled by JS). The system cursor stays visible. ── */
+.cursor-aura { display: none; }
+.has-cursor .cursor-aura {
     display: block; position: fixed; top: 0; left: 0; pointer-events: none; z-index: var(--z-cursor);
     border-radius: 50%; will-change: transform;
+    width: 34px; height: 34px; border: 1px solid var(--glow); opacity: 0;
+    transition: width .45s var(--ease), height .45s var(--ease), border-color .3s, background-color .3s, opacity .3s;
 }
-.has-cursor .cursor { width: 6px; height: 6px; background: var(--accent); transition: width .25s var(--ease), height .25s var(--ease); }
-.has-cursor .cursor-aura {
-    width: 38px; height: 38px; border: 1px solid var(--glow);
-    transition: width .45s var(--ease), height .45s var(--ease), border-color .3s, background-color .3s;
-}
-.has-cursor.cursor-hover .cursor { width: 0; height: 0; }
-.has-cursor.cursor-hover .cursor-aura { width: 58px; height: 58px; border-color: var(--accent); background: var(--accent-soft); }
+.has-cursor.cursor-on .cursor-aura { opacity: 1; }
+.has-cursor.cursor-hover .cursor-aura { width: 52px; height: 52px; border-color: var(--accent); background: var(--accent-soft); }
 
 /* ── Preloader ── */
 .preloader {
     position: fixed; inset: 0; z-index: var(--z-preloader); background: var(--bg);
     display: grid; place-items: center;
-    transition: opacity .7s var(--ease), visibility .7s;
+    transition: opacity .4s var(--ease), visibility .4s;
     /* Failsafe: fades out on its own even if JS never runs to completion */
-    animation: pre-out .7s 2.6s var(--ease) forwards;
+    animation: pre-out .4s 1.4s var(--ease) forwards;
 }
 @keyframes pre-out { to { opacity: 0; visibility: hidden; } }
 .intro-seen .preloader, html:not(.js) .preloader { display: none; }
@@ -152,12 +147,12 @@ main, .footer { position: relative; z-index: var(--z-content); }
 .pre-ring svg { position: absolute; inset: 0; transform: rotate(-90deg); }
 .pre-ring circle {
     fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-linecap: round;
-    stroke-dasharray: 290; stroke-dashoffset: 290; animation: pre-draw 1.1s var(--ease) forwards;
+    stroke-dasharray: 290; stroke-dashoffset: 290; animation: pre-draw .65s var(--ease) forwards;
 }
-.pre-logo { position: absolute; inset: 9px; width: calc(100% - 18px); border-radius: 50%; opacity: 0; animation: fade-in .6s .2s var(--ease) forwards; }
+.pre-logo { position: absolute; inset: 9px; width: calc(100% - 18px); border-radius: 50%; opacity: 0; animation: fade-in .4s .08s var(--ease) forwards; }
 .pre-word {
     font-family: var(--ff); font-size: 1.35rem; letter-spacing: -.01em; opacity: 0;
-    animation: rise-in .8s .35s var(--ease) forwards;
+    animation: rise-in .5s .15s var(--ease) forwards;
 }
 .pre-word em { color: var(--accent); font-weight: 300; }
 @keyframes pre-draw { to { stroke-dashoffset: 0; } }
@@ -465,6 +460,8 @@ main, .footer { position: relative; z-index: var(--z-content); }
 .project + .project { margin-top: clamp(1.5rem, 3vw, 2rem); }
 .project-core { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: clamp(2rem, 4vw, 3.5rem); padding: clamp(1rem, 2.5vw, 2rem); overflow: hidden; }
 .project--flip .project-visual { order: 2; }
+/* Flipped browser mockups keep the wide column, matching the left-aligned ones */
+.project--flip.project--wide-visual .project-core { grid-template-columns: 1fr 1.25fr; }
 .project-visual {
     position: relative; display: grid; place-items: center; align-self: stretch; min-height: 22rem;
     padding: clamp(1.25rem, 3vw, 2.75rem); border-radius: calc(var(--r-xl) - 1rem);
@@ -490,12 +487,17 @@ main, .footer { position: relative; z-index: var(--z-content); }
     flex: 1; max-width: 16rem; margin: 0 auto; text-align: center; padding: .22rem .8rem; border-radius: .45rem;
     font-family: var(--fm); font-size: .68rem; color: var(--text-3); background: var(--shell);
     transform: translateX(-1.2rem);
+    min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .browser-body { position: relative; overflow: hidden; background: #000; }
 .browser-body--video { aspect-ratio: 3000 / 1654; }
-.p-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.p-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.p-video::-webkit-media-controls, .p-video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
 .browser-body--scroll { aspect-ratio: 16 / 10; background: #f4f1ea; }
 .browser-body--scroll img { width: 100%; height: auto; transition: transform 2.4s var(--ease); }
+.browser-body--dark { background: #211e1b; }
+.project--wide-visual .browser-body--scroll { aspect-ratio: 3000 / 1654; }
+.project--wide-visual .browser-body--scroll img { height: 100%; object-fit: cover; object-position: top; }
 
 .phone {
     position: relative; width: min(250px, 72%); padding: 7px; border-radius: 2.6rem;
@@ -619,7 +621,7 @@ a.cl-value:hover { color: var(--accent); }
     .burger { display: grid; }
     .hero-grid { grid-template-columns: 1fr; }
     .hero-visual { max-width: 360px; order: -1; margin-bottom: -.5rem; }
-    .project-core { grid-template-columns: 1fr; }
+    .project-core, .project--flip.project--wide-visual .project-core { grid-template-columns: 1fr; }
     .project--flip .project-visual { order: 0; }
     .project-visual { min-height: 0; }
 }
@@ -647,7 +649,8 @@ a.cl-value:hover { color: var(--accent); }
     .founder-id { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
     .founder-actions .btn, .project-info .btn, .hero-actions .btn { width: 100%; justify-content: space-between; }
     .browser { transform: none; }
-    .bb-url { transform: none; }
+    .bb-url { transform: none; font-size: .62rem; padding: .22rem .5rem; }
+    .browser-bar { gap: .5rem; }
     .bezel { border-radius: 1.6rem; padding: .3rem; }
     .bezel-core { border-radius: 1.3rem; }
     .project-visual { border-radius: 1rem; }
@@ -675,5 +678,5 @@ main:focus { outline: none; }
 }
 
 /* Failsafe: if script.js never runs, reveal everything after a short delay */
-.js:not(.is-ready) .hero-in, .js:not(.is-ready) .hero-title .word, .js:not(.is-ready) .rv { animation: failsafe-show .8s 3.5s var(--ease) forwards; }
+.js:not(.is-ready) .hero-in, .js:not(.is-ready) .hero-title .word, .js:not(.is-ready) .rv { animation: failsafe-show .8s 2s var(--ease) forwards; }
 @keyframes failsafe-show { to { opacity: 1; transform: none; filter: none; } }
