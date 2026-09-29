@@ -1,586 +1,421 @@
 /* =============================================
-   SKYMOON STUDIOS — Starfield + GSAP Engine
+   SKYMOON STUDIOS — Interactions
    ============================================= */
 
 (() => {
     "use strict";
 
-    /* ━━━ Canvas Starfield & Shooting Stars ━━━ */
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    const store = {
+        get(key) { try { return localStorage.getItem(key); } catch (_) { return null; } },
+        set(key, value) { try { localStorage.setItem(key, value); } catch (_) { /* storage blocked */ } },
+    };
+
+    let currentLang = store.get("skymoon-lang") === "en" ? "en" : "tr";
+
+    /* ━━━ Starfield ━━━ */
     const canvas = document.getElementById("starfield");
     const ctx = canvas ? canvas.getContext("2d") : null;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let W, H;
+    let W = 0, H = 0, dpr = 1;
 
     function resize() {
         W = window.innerWidth;
         H = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
         if (canvas) {
-            canvas.width = W;
-            canvas.height = H;
+            canvas.width = W * dpr;
+            canvas.height = H * dpr;
+            canvas.style.width = W + "px";
+            canvas.style.height = H + "px";
+            if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
     }
     resize();
     window.addEventListener("resize", resize, { passive: true });
 
-    // Stars
-    const STAR_COUNT = prefersReducedMotion ? 90 : 220;
-    const stars = [];
-    for (let i = 0; i < STAR_COUNT; i++) {
-        stars.push({
-            x: Math.random() * 2000 - 500,
-            y: Math.random() * 2000 - 500,
-            r: Math.random() * 1.4 + 0.3,
-            a: Math.random() * 0.6 + 0.15,
-            tw: Math.random() * Math.PI * 2, // twinkle phase
-            ts: Math.random() * 0.008 + 0.003, // twinkle speed
-            dx: Math.random() * 0.08 - 0.04,
-            dy: Math.random() * 0.04 + 0.01,
-        });
-    }
+    const STAR_COUNT = reduceMotion ? 80 : Math.min(200, Math.round((W * H) / 7000));
+    const stars = Array.from({ length: STAR_COUNT }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.3 + 0.3,
+        a: Math.random() * 0.55 + 0.15,
+        tw: Math.random() * Math.PI * 2,
+        ts: Math.random() * 0.008 + 0.003,
+        dx: Math.random() * 0.06 - 0.03,
+        dy: Math.random() * 0.03 + 0.008,
+    }));
+    const shooters = [];
 
-    // Shooting stars
-    const shootingStars = [];
     function spawnShooter() {
-        shootingStars.push({
+        shooters.push({
             x: Math.random() * W * 0.6,
-            y: Math.random() * H * 0.4,
-            len: Math.random() * 100 + 60,
+            y: Math.random() * H * 0.35,
+            len: Math.random() * 90 + 60,
             speed: Math.random() * 6 + 4,
-            angle: (Math.PI / 6) + Math.random() * (Math.PI / 8),
-            opacity: 1,
+            angle: Math.PI / 6 + Math.random() * (Math.PI / 8),
             life: 0,
-            maxLife: Math.random() * 50 + 30,
+            maxLife: Math.random() * 45 + 30,
         });
     }
-    // occasional shooters
-    const shooterInterval = setInterval(() => {
-        if (!ctx || prefersReducedMotion) return;
-        if (shootingStars.length < 3 && Math.random() > 0.3) spawnShooter();
-    }, prefersReducedMotion ? 3200 : 1800);
-
-    // Nebula / soft glow spots
-    const nebulae = [
-        { x: 0.2, y: 0.3, r: 300, color: "rgba(212,165,116,0.012)" },
-        { x: 0.7, y: 0.15, r: 250, color: "rgba(200,149,108,0.008)" },
-        { x: 0.5, y: 0.75, r: 350, color: "rgba(166,123,91,0.01)" },
-    ];
+    if (!reduceMotion) {
+        setInterval(() => {
+            if (!document.hidden && shooters.length < 2 && Math.random() > 0.45) spawnShooter();
+        }, 2400);
+    }
 
     function drawStars() {
-        if (!ctx || !canvas) return;
-
-        if (document.hidden) {
-            requestAnimationFrame(drawStars);
-            return;
-        }
-
+        if (!ctx) return;
+        if (document.hidden) { requestAnimationFrame(drawStars); return; }
         ctx.clearRect(0, 0, W, H);
 
-        // draw nebulae
-        nebulae.forEach(n => {
-            const grd = ctx.createRadialGradient(n.x * W, n.y * H, 0, n.x * W, n.y * H, n.r);
-            grd.addColorStop(0, n.color);
-            grd.addColorStop(1, "transparent");
-            ctx.fillStyle = grd;
-            ctx.fillRect(0, 0, W, H);
-        });
+        const light = root.getAttribute("data-theme") === "light";
+        const [sr, sg, sb] = light ? [110, 75, 45] : [245, 237, 227];
+        const [gr, gg, gb] = light ? [154, 106, 67] : [212, 165, 116];
+        const k = light ? 0.55 : 1;
 
-        // draw stars
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const starR = isLight ? 70 : 245;
-        const starG = isLight ? 45 : 237;
-        const starB = isLight ? 20 : 227;
-        const glowR = isLight ? 100 : 212;
-        const glowG = isLight ? 60 : 165;
-        const glowB = isLight ? 25 : 116;
-
-        stars.forEach(s => {
-            s.tw += s.ts;
-            s.x += s.dx;
-            s.y += s.dy;
-            if (s.x > W + 50) s.x = -50;
-            if (s.y > H + 50) s.y = -50;
-
-            const twinkle = 0.5 + 0.5 * Math.sin(s.tw);
-            const alpha = s.a * twinkle * (isLight ? 0.85 : 1);
-
+        for (const s of stars) {
+            if (!reduceMotion) {
+                s.tw += s.ts; s.x += s.dx; s.y += s.dy;
+                if (s.x > W + 20) s.x = -20; else if (s.x < -20) s.x = W + 20;
+                if (s.y > H + 20) s.y = -20;
+            }
+            const alpha = s.a * (0.5 + 0.5 * Math.sin(s.tw)) * k;
             ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r * (isLight ? 1.2 : 1), 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${starR}, ${starG}, ${starB}, ${alpha})`;
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${sr},${sg},${sb},${alpha})`;
             ctx.fill();
-
-            // subtle glow for brighter stars
-            if (s.r > 1) {
+            if (s.r > 1.1) {
                 ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r * (isLight ? 4 : 3), 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${glowR}, ${glowG}, ${glowB}, ${alpha * (isLight ? 0.18 : 0.12)})`;
+                ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${gr},${gg},${gb},${alpha * 0.12})`;
                 ctx.fill();
             }
-        });
+        }
 
-        // draw shooting stars
-        for (let i = shootingStars.length - 1; i >= 0; i--) {
-            const ss = shootingStars[i];
+        for (let i = shooters.length - 1; i >= 0; i--) {
+            const ss = shooters[i];
             ss.life++;
-            const progress = ss.life / ss.maxLife;
-            ss.opacity = progress < 0.5 ? 1 : 1 - (progress - 0.5) * 2;
-
+            const p = ss.life / ss.maxLife;
+            const o = (p < 0.5 ? 1 : 1 - (p - 0.5) * 2) * k;
             const ex = ss.x + Math.cos(ss.angle) * ss.speed * ss.life;
             const ey = ss.y + Math.sin(ss.angle) * ss.speed * ss.life;
             const sx = ex - Math.cos(ss.angle) * ss.len;
             const sy = ey - Math.sin(ss.angle) * ss.len;
-
             const grad = ctx.createLinearGradient(sx, sy, ex, ey);
-            grad.addColorStop(0, `rgba(${glowR}, ${glowG}, ${glowB}, 0)`);
-            grad.addColorStop(0.4, `rgba(${starR}, ${starG}, ${starB}, ${ss.opacity * (isLight ? 0.35 : 0.3)})`);
-            grad.addColorStop(1, `rgba(${starR}, ${starG}, ${starB}, ${ss.opacity * (isLight ? 0.8 : 0.9)})`);
-
+            grad.addColorStop(0, `rgba(${gr},${gg},${gb},0)`);
+            grad.addColorStop(1, `rgba(${sr},${sg},${sb},${o * 0.85})`);
             ctx.beginPath();
             ctx.moveTo(sx, sy);
             ctx.lineTo(ex, ey);
             ctx.strokeStyle = grad;
-            ctx.lineWidth = isLight ? 2 : 1.5;
+            ctx.lineWidth = 1.4;
             ctx.stroke();
-
-            // bright head
-            ctx.beginPath();
-            ctx.arc(ex, ey, isLight ? 2.5 : 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${starR}, ${starG}, ${starB}, ${ss.opacity * (isLight ? 0.85 : 1)})`;
-            ctx.fill();
-
-            if (ss.life >= ss.maxLife) shootingStars.splice(i, 1);
+            if (ss.life >= ss.maxLife) shooters.splice(i, 1);
         }
-
         requestAnimationFrame(drawStars);
     }
-    if (ctx && canvas) requestAnimationFrame(drawStars);
+    if (ctx) requestAnimationFrame(drawStars);
 
-    /* ━━━ Custom Cursor ━━━ */
-    let currentLang = localStorage.getItem("skymoon-lang") || "tr";
-
-    const cursor = document.querySelector(".cursor");
-    const aura = document.querySelector(".cursor-aura");
-    let mx = -100, my = -100, cx = -100, cy = -100, ax = -100, ay = -100;
-
-    if (cursor && aura && !prefersReducedMotion) {
-        window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
-        (function moveCursor() {
-            if (document.hidden) {
-                requestAnimationFrame(moveCursor);
-                return;
-            }
-            cx += (mx - cx) * 0.2;
-            cy += (my - cy) * 0.2;
-            ax += (mx - ax) * 0.08;
-            ay += (my - ay) * 0.08;
-            cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-            aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
-            requestAnimationFrame(moveCursor);
-        })();
-    }
-
-    /* ━━━ Lenis ━━━ */
-    const lenis = typeof Lenis !== "undefined"
-        ? new Lenis({ duration: prefersReducedMotion ? 0.9 : 1.3, easing: t => 1 - Math.pow(1 - t, 4), smooth: !prefersReducedMotion })
+    /* ━━━ Smooth scroll (Lenis, optional) ━━━ */
+    const lenis = (typeof Lenis !== "undefined" && !reduceMotion)
+        ? new Lenis({ duration: 1.15, easing: t => 1 - Math.pow(1 - t, 4) })
         : null;
     if (lenis) {
-        function raf(time) {
-            if (!document.hidden) lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        const raf = time => { lenis.raf(time); requestAnimationFrame(raf); };
         requestAnimationFrame(raf);
     }
 
-    /* ━━━ GSAP Setup ━━━ */
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-    if (lenis) lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.lagSmoothing(0);
-
-    /* ━━━ Preloader ━━━ */
+    /* ━━━ Preloader → hero entrance ━━━ */
     const preloader = document.querySelector(".preloader");
-    const preTL = gsap.timeline({
-        onComplete() {
-            preloader.style.pointerEvents = "none";
-            if (lenis) lenis.start();
-            animateHero();
-        }
-    });
-
-    if (lenis) lenis.stop();
-
-    preTL
-        .to(".pre-ring circle", { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut" })
-        .to(".pre-l", { opacity: 1, y: 0, stagger: 0.04, duration: 0.5, ease: "back.out(2)" }, "-=0.6")
-        .to(".pre-sub", { opacity: 1, duration: 0.4 }, "-=0.2")
-        .to(".pre-fill", { width: "100%", duration: 0.8, ease: "power2.inOut" }, "-=0.3")
-        .to(preloader, { opacity: 0, duration: 0.5, ease: "power2.in" }, "+=0.2");
-
-    /* ━━━ Hero Animation ━━━ */
-    function animateHero() {
-        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-        tl.to(".word", { y: 0, stagger: 0.07, duration: 1.2 }, 0)
-          .to(".hero-p", { opacity: 1, y: 0, duration: 0.8 }, 0.4)
-          .to(".hero-btns", { opacity: 1, y: 0, duration: 0.8 }, 0.5)
-          .fromTo(".orbit-ring", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, stagger: 0.15, duration: 1.2, ease: "expo.out" }, 0.3);
+    function reveal() {
+        root.classList.add("is-ready");
+        if (lenis) lenis.start();
+    }
+    if (preloader && !root.classList.contains("intro-seen")) {
+        if (lenis) lenis.stop();
+        try { sessionStorage.setItem("skymoon-intro", "1"); } catch (_) { /* ignore */ }
+        setTimeout(() => {
+            preloader.classList.add("done");
+            setTimeout(reveal, 250);
+        }, reduceMotion ? 200 : 1500);
+    } else {
+        requestAnimationFrame(() => requestAnimationFrame(reveal));
     }
 
-    /* ━━━ Scroll Reveals ━━━ */
-    document.querySelectorAll(".rv").forEach((el, i) => {
-        ScrollTrigger.create({
-            trigger: el,
-            start: "top 88%",
-            once: true,
-            onEnter() {
-                gsap.to(el, { opacity: 1, y: 0, duration: 0.9, delay: (i % 4) * 0.08, ease: "power3.out" });
-            }
+    /* ━━━ Scroll reveals ━━━ */
+    const revealEls = document.querySelectorAll(".rv");
+    if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("in");
+                io.unobserve(entry.target);
+            });
+        }, { rootMargin: "0px 0px -10% 0px", threshold: 0.08 });
+
+        revealEls.forEach(el => {
+            // Stagger siblings that share a parent (bento tiles, principles…)
+            const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains("rv"));
+            const idx = siblings.indexOf(el);
+            if (idx > 0) el.style.setProperty("--rv-d", `${Math.min(idx, 4) * 0.08}s`);
+            io.observe(el);
         });
-    });
-
-    /* ━━━ Counter Animation ━━━ */
-    document.querySelectorAll(".counter").forEach(span => {
-        const target = parseInt(span.dataset.to) || 0;
-        const parent = span.parentElement;
-
-        ScrollTrigger.create({
-            trigger: parent,
-            start: "top 92%",
-            once: true,
-            onEnter() {
-                const obj = { val: 0 };
-                gsap.to(obj, {
-                    val: target,
-                    duration: 2.2,
-                    ease: "power2.out",
-                    onUpdate() { span.textContent = Math.round(obj.val); }
-                });
-            }
-        });
-    });
-
-    /* ━━━ Navbar ━━━ */
-    const nav = document.querySelector(".nav");
-    if (nav) {
-        window.addEventListener("scroll", () => {
-            const s = window.scrollY;
-            if (s > 60) nav.classList.add("scrolled");
-            else nav.classList.remove("scrolled");
-        }, { passive: true });
+    } else {
+        revealEls.forEach(el => el.classList.add("in"));
     }
 
-    /* ━━━ Smooth anchor scroll ━━━ */
+    /* ━━━ Nav: scrolled state + active section ━━━ */
+    const nav = document.getElementById("nav");
+    const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+    const onScroll = () => { if (nav) nav.classList.toggle("scrolled", window.scrollY > 40); };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    if ("IntersectionObserver" in window) {
+        const sectionIO = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.id;
+                navLinks.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
+            });
+        }, { rootMargin: "-45% 0px -50% 0px" });
+        document.querySelectorAll("main section[id]").forEach(s => sectionIO.observe(s));
+    }
+
+    /* ━━━ Mobile drawer ━━━ */
+    const burger = document.getElementById("burger");
+    const drawer = document.getElementById("drawer");
+    function setDrawer(open) {
+        if (!burger || !drawer) return;
+        burger.classList.toggle("on", open);
+        drawer.classList.toggle("open", open);
+        burger.setAttribute("aria-expanded", String(open));
+        drawer.setAttribute("aria-hidden", String(!open));
+        burger.setAttribute("aria-label", open
+            ? (currentLang === "tr" ? "Menüyü kapat" : "Close menu")
+            : (currentLang === "tr" ? "Menüyü aç" : "Open menu"));
+        document.body.style.overflow = open ? "hidden" : "";
+        if (lenis) open ? lenis.stop() : lenis.start();
+    }
+    if (burger) burger.addEventListener("click", () => setDrawer(!drawer.classList.contains("open")));
+    document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && drawer && drawer.classList.contains("open")) setDrawer(false);
+    });
+
+    /* ━━━ Anchor links ━━━ */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         const href = a.getAttribute("href");
         if (!href || href === "#") return;
-
         a.addEventListener("click", e => {
-            e.preventDefault();
             const target = document.querySelector(href);
-            if (target) {
-                if (lenis) lenis.scrollTo(target, { offset: -60 });
-                else target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
-            }
-            // close drawer
-            const drawer = document.querySelector(".drawer");
-            const burger = document.querySelector(".burger");
-            if (drawer && drawer.classList.contains("open")) {
-                drawer.classList.remove("open");
-                burger.classList.remove("on");
-            }
-        });
-    });
-
-    /* ━━━ Mobile Drawer ━━━ */
-    const burger = document.querySelector(".burger");
-    const drawer = document.querySelector(".drawer");
-    if (burger && drawer) {
-        burger.addEventListener("click", () => {
-            burger.classList.toggle("on");
-            drawer.classList.toggle("open");
-        });
-    }
-
-    /* ━━━ Active Nav Link ━━━ */
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-link");
-    window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach(sec => {
-            const top = sec.offsetTop - 120;
-            if (scrollY >= top) current = sec.id;
-        });
-        navLinks.forEach(l => {
-            l.classList.remove("active");
-            if (l.getAttribute("href") === `#${current}`) l.classList.add("active");
-        });
-    }, { passive: true });
-
-    /* ━━━ Service Tile Tilt + Shine ━━━ */
-    document.querySelectorAll(".service-tile").forEach(tile => {
-        const shine = tile.querySelector(".tile-shine");
-        if (!prefersReducedMotion) {
-            let rafId = null;
-            let lastEvent = null;
-            tile.addEventListener("mousemove", e => {
-                lastEvent = e;
-                if (rafId) return;
-
-                rafId = requestAnimationFrame(() => {
-                    const rect = tile.getBoundingClientRect();
-                    const x = lastEvent.clientX - rect.left;
-                    const y = lastEvent.clientY - rect.top;
-                    const px = x / rect.width;
-                    const py = y / rect.height;
-                    const rx = (py - 0.5) * 10;
-                    const ry = (px - 0.5) * -10;
-                    tile.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px)`;
-                    if (shine) {
-                        shine.style.left = `${px * 100 - 30}%`;
-                        shine.style.transition = "none";
-                    }
-                    rafId = null;
-                });
-            });
-        }
-        tile.addEventListener("mouseleave", () => {
-            tile.style.transform = "";
-            if (shine) shine.style.left = "-100%";
-        });
-    });
-
-    /* ━━━ Magnetic Buttons ━━━ */
-    document.querySelectorAll(".btn-glow, .nav-cta").forEach(btn => {
-        if (prefersReducedMotion) return;
-        btn.addEventListener("mousemove", e => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-        });
-        btn.addEventListener("mouseleave", () => {
-            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" });
-            btn.style.transform = "";
-        });
-    });
-
-    /* ━━━ Timeline Progress (cards enter animation) ━━━ */
-    document.querySelectorAll(".tl-step").forEach((step, i) => {
-        gsap.fromTo(step, { opacity: 0, y: 50, scale: 0.9 }, {
-            opacity: 1, y: 0, scale: 1,
-            duration: 0.8,
-            delay: i * 0.12,
-            ease: "back.out(1.5)",
-            scrollTrigger: { trigger: step, start: "top 85%", once: true }
-        });
-    });
-
-    /* ━━━ Marquee pause on hover ━━━ */
-    document.querySelectorAll(".mq-track").forEach(track => {
-        track.addEventListener("mouseenter", () => track.style.animationPlayState = "paused");
-        track.addEventListener("mouseleave", () => track.style.animationPlayState = "running");
-    });
-
-    /* ━━━ Parallax on browser mock images (not videos) ━━━ */
-    document.querySelectorAll(".browser-mock .bm-body img").forEach(el => {
-        gsap.to(el, {
-            y: "-20%",
-            ease: "none",
-            scrollTrigger: {
-                trigger: el.closest(".project-showcase"),
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1.5,
-            }
-        });
-    });
-
-    /* ━━━ Ensure videos autoplay ━━━ */
-    document.querySelectorAll("video[autoplay]").forEach(v => {
-        v.play().catch(() => {});
-    });
-
-    /* ━━━ Contact Form ━━━ */
-    const form = document.getElementById("contactForm");
-    if (form) {
-        form.addEventListener("submit", e => {
+            if (!target) return;
             e.preventDefault();
-            const btn = form.querySelector(".btn-glow");
-            const btnText = btn.querySelector(".btn-glow-text");
-            const orig = btnText.textContent;
-            btnText.textContent = currentLang === "tr" ? "Gönderildi! ✨" : "Sent! ✨";
-            gsap.fromTo(btn, { scale: 0.95 }, { scale: 1, duration: 0.5, ease: "elastic.out(1, 0.4)" });
-            setTimeout(() => { btnText.textContent = orig; form.reset(); }, 2500);
+            if (drawer && drawer.classList.contains("open")) setDrawer(false);
+            if (lenis) lenis.scrollTo(target, { offset: href === "#hero" ? 0 : -24 });
+            else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+            if (href === "#main") target.focus({ preventScroll: true });
+        });
+    });
+
+    /* ━━━ Custom cursor ━━━ */
+    const cursor = document.querySelector(".cursor");
+    const aura = document.querySelector(".cursor-aura");
+    if (cursor && aura && finePointer && !reduceMotion) {
+        root.classList.add("has-cursor");
+        let mx = -100, my = -100, cx = -100, cy = -100, ax = -100, ay = -100;
+        window.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+        document.addEventListener("mouseover", e => {
+            root.classList.toggle("cursor-hover", !!e.target.closest("a, button, .tile"));
+        });
+        document.addEventListener("mouseleave", () => { mx = my = -100; });
+        (function loop() {
+            cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35;
+            ax += (mx - ax) * 0.14; ay += (my - ay) * 0.14;
+            cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+            aura.style.transform = `translate(${ax}px, ${ay}px) translate(-50%, -50%)`;
+            requestAnimationFrame(loop);
+        })();
+    }
+
+    /* ━━━ Spotlight on service tiles ━━━ */
+    if (finePointer) {
+        document.querySelectorAll(".tile-core").forEach(core => {
+            core.addEventListener("pointermove", e => {
+                const r = core.getBoundingClientRect();
+                core.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                core.style.setProperty("--my", `${e.clientY - r.top}px`);
+            });
         });
     }
 
-    /* ━━━ Extra: Parallax depth for hero ━━━ */
-    const orbitRings = document.querySelectorAll(".orbit-ring");
-    if (!prefersReducedMotion && orbitRings.length) {
+    /* ━━━ Phone turns toward the cursor, like a sunflower following the sun ━━━ */
+    const phone = document.querySelector(".phone");
+    if (phone && finePointer && !reduceMotion) {
+        const MAX_Y = 22;   // left/right turn, degrees
+        const MAX_X = 14;   // up/down tilt, degrees
+        let px = null, py = null;          // pointer position; null = pointer off-page
+        let tx = 0, ty = 0, cx = 0, cy = 0; // target / current angles
+        let visible = false, running = false;
+
+        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+        function frame() {
+            if (px === null) {
+                tx = 0; ty = 0;
+            } else {
+                const r = phone.getBoundingClientRect();
+                // Normalised distance from the phone's centre to the pointer (-1…1)
+                const dx = clamp((px - (r.left + r.width / 2)) / (W * 0.5), -1, 1);
+                const dy = clamp((py - (r.top + r.height / 2)) / (H * 0.5), -1, 1);
+                ty = dx * MAX_Y;
+                tx = -dy * MAX_X;
+            }
+            cx += (tx - cx) * 0.08;
+            cy += (ty - cy) * 0.08;
+            phone.style.setProperty("--tilt-x", `${cx.toFixed(2)}deg`);
+            phone.style.setProperty("--tilt-y", `${cy.toFixed(2)}deg`);
+            phone.style.setProperty("--glare-x", `${50 + cy * 2}%`);
+            phone.style.setProperty("--glare-y", `${50 - cx * 3}%`);
+            phone.style.setProperty("--glare-o", px === null ? "0" : "1");
+
+            const settled = Math.abs(tx - cx) < 0.02 && Math.abs(ty - cy) < 0.02;
+            if (visible && !(px === null && settled)) requestAnimationFrame(frame);
+            else running = false;
+        }
+        function wake() {
+            if (visible && !running) { running = true; requestAnimationFrame(frame); }
+        }
+
+        window.addEventListener("pointermove", e => {
+            if (e.pointerType !== "mouse") return;
+            px = e.clientX; py = e.clientY; wake();
+        }, { passive: true });
+        document.documentElement.addEventListener("mouseleave", () => { px = py = null; wake(); });
+        window.addEventListener("blur", () => { px = py = null; wake(); });
+
+        if ("IntersectionObserver" in window) {
+            new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; wake(); }).observe(phone);
+        } else {
+            visible = true;
+        }
+    }
+
+    /* ━━━ Hero parallax on the moon ━━━ */
+    const heroVisual = document.querySelector(".hero-visual");
+    if (heroVisual && finePointer && !reduceMotion) {
+        const moon = heroVisual.querySelector(".moon");
+        const orbits = heroVisual.querySelectorAll(".orbit");
         window.addEventListener("mousemove", e => {
             const x = (e.clientX / W - 0.5) * 2;
             const y = (e.clientY / H - 0.5) * 2;
-            orbitRings.forEach((ring, i) => {
-                const factor = (i + 1) * 6;
-                ring.style.transform = `translate(calc(-50% + ${x * factor}px), calc(-50% + ${y * factor}px))`;
-            });
+            if (moon) moon.style.translate = `${x * 10}px ${y * 10}px`;
+            orbits.forEach((o, i) => { o.style.translate = `${x * (i + 1) * -5}px ${y * (i + 1) * -5}px`; });
         }, { passive: true });
     }
 
-    /* ━━━ Dark / Light Theme Toggle ━━━ */
-    const themeToggle = document.getElementById("themeToggle");
-    let isDark = true;
-
-    // Adapt starfield for light mode
-    function updateStarColors() {
-        stars.forEach(s => {
-            s.lightMode = !isDark;
-        });
-    }
-
-    if (themeToggle) {
-        // Check saved preference
-        const saved = localStorage.getItem("skymoon-theme");
-        if (saved === "light") {
-            document.documentElement.setAttribute("data-theme", "light");
-            isDark = false;
-            updateStarColors();
+    /* ━━━ Video autoplay (iOS-safe) ━━━ */
+    document.querySelectorAll(".p-video").forEach(video => {
+        video.muted = true;
+        video.playsInline = true;
+        const tryPlay = () => { const p = video.play(); if (p) p.catch(() => {}); };
+        if ("IntersectionObserver" in window) {
+            new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) tryPlay(); else video.pause();
+            }, { threshold: 0.2 }).observe(video);
         } else {
-            document.documentElement.removeAttribute("data-theme");
-            isDark = true;
-            if (!saved) localStorage.setItem("skymoon-theme", "dark");
-            updateStarColors();
+            tryPlay();
         }
+    });
 
-        themeToggle.addEventListener("click", () => {
-            isDark = !isDark;
-            if (isDark) {
-                document.documentElement.removeAttribute("data-theme");
-                localStorage.setItem("skymoon-theme", "dark");
-            } else {
-                document.documentElement.setAttribute("data-theme", "light");
-                localStorage.setItem("skymoon-theme", "light");
+    /* ━━━ Contact form → prefilled email ━━━ */
+    const form = document.getElementById("contactForm");
+    if (form) {
+        const note = form.querySelector(".form-note");
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        const validate = field => {
+            const input = field.querySelector("input, textarea");
+            const value = input.value.trim();
+            const ok = input.type === "email" ? emailRe.test(value) : value.length > 0;
+            field.classList.toggle("invalid", !ok);
+            input.setAttribute("aria-invalid", String(!ok));
+            return ok;
+        };
+
+        form.querySelectorAll(".field").forEach(field => {
+            const input = field.querySelector("input, textarea");
+            input.addEventListener("blur", () => { if (input.value) validate(field); });
+            input.addEventListener("input", () => { if (field.classList.contains("invalid")) validate(field); });
+        });
+
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+            const fields = Array.from(form.querySelectorAll(".field"));
+            const results = fields.map(validate);
+            if (results.includes(false)) {
+                fields[results.indexOf(false)].querySelector("input, textarea").focus();
+                return;
             }
-            updateStarColors();
-            // Smooth body transition
-            document.body.style.transition = "background .5s, color .5s";
+            const data = new FormData(form);
+            const subject = `[Skymoon Studios] ${data.get("subject").trim()}`;
+            const body = `${data.get("message").trim()}\n\n— ${data.get("name").trim()}\n${data.get("email").trim()}`;
+            window.location.href = `mailto:contact.skymoonstudios@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            if (note) {
+                note.classList.add("ok");
+                note.textContent = currentLang === "tr"
+                    ? "E-posta uygulamanız açılıyor. Açılmazsa bize doğrudan contact.skymoonstudios@gmail.com adresinden yazabilirsiniz."
+                    : "Opening your email app. If nothing happens, write to us directly at contact.skymoonstudios@gmail.com.";
+            }
         });
     }
 
-    /* ━━━ TR / EN Language Toggle ━━━ */
+    /* ━━━ Theme toggle ━━━ */
+    const themeToggle = document.getElementById("themeToggle");
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const syncThemeMeta = () => {
+        if (themeMeta) themeMeta.content = root.getAttribute("data-theme") === "light" ? "#f4efe8" : "#0d0b09";
+    };
+    syncThemeMeta();
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const toLight = root.getAttribute("data-theme") !== "light";
+            if (toLight) root.setAttribute("data-theme", "light");
+            else root.removeAttribute("data-theme");
+            store.set("skymoon-theme", toLight ? "light" : "dark");
+            syncThemeMeta();
+        });
+    }
+
+    /* ━━━ Language toggle ━━━ */
+    const TITLES = {
+        tr: "Skymoon Studios — Dijital Ürün Stüdyosu",
+        en: "Skymoon Studios — Digital Product Studio",
+    };
+
+    function applyLanguage(lang) {
+        root.setAttribute("lang", lang);
+        document.querySelectorAll("[data-tr][data-en]").forEach(el => {
+            const text = el.getAttribute(`data-${lang}`);
+            if (text !== null && el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") el.innerHTML = text;
+        });
+        document.querySelectorAll(`[data-${lang}-ph]`).forEach(el => { el.placeholder = el.getAttribute(`data-${lang}-ph`); });
+        document.querySelectorAll(`[data-${lang}-aria]`).forEach(el => { el.setAttribute("aria-label", el.getAttribute(`data-${lang}-aria`)); });
+        document.querySelectorAll(`[data-${lang}-alt]`).forEach(el => { el.alt = el.getAttribute(`data-${lang}-alt`); });
+        const langBtn = document.getElementById("langToggle");
+        if (langBtn) langBtn.textContent = lang === "tr" ? "EN" : "TR";
+        document.title = TITLES[lang];
+    }
+
     const langToggle = document.getElementById("langToggle");
-
+    if (currentLang === "en") applyLanguage("en");
     if (langToggle) {
-        const langLabel = langToggle.querySelector(".lang-label");
-        if (currentLang === "en") {
-            if (langLabel) langLabel.textContent = "TR";
-            applyLanguage("en");
-        }
-
         langToggle.addEventListener("click", () => {
             currentLang = currentLang === "tr" ? "en" : "tr";
-            if (langLabel) langLabel.textContent = currentLang === "tr" ? "EN" : "TR";
-            localStorage.setItem("skymoon-lang", currentLang);
+            store.set("skymoon-lang", currentLang);
             applyLanguage(currentLang);
         });
     }
-
-    document.querySelectorAll(".bm-video").forEach(video => {
-        video.muted = true;
-        video.defaultMuted = true;
-        video.playsInline = true;
-        video.autoplay = true;
-        video.loop = true;
-        video.setAttribute("playsinline", "");
-        video.setAttribute("webkit-playsinline", "");
-        video.setAttribute("muted", "");
-        video.setAttribute("autoplay", "");
-        video.setAttribute("loop", "");
-        video.style.visibility = "visible";
-        video.style.opacity = "1";
-        video.style.backgroundColor = "#000";
-
-        let videoAttempts = 0;
-        const maxAttempts = 3;
-        let playbackStarted = false;
-
-        const startVideo = () => {
-            if (!video) return;
-            try {
-                video.style.visibility = "visible";
-                if (!playbackStarted && video.paused) {
-                    video.play().catch(err => {
-                        if (videoAttempts < maxAttempts) {
-                            videoAttempts++;
-                            setTimeout(() => {
-                                if (video.paused) video.play().catch(() => {});
-                            }, 500);
-                        }
-                    }).then(() => {
-                        playbackStarted = true;
-                    });
-                }
-            } catch (_) {}
-        };
-
-        const skipFrame = () => {
-            try {
-                if (video.duration > 0 && video.currentTime < 0.5) {
-                    video.currentTime = Math.max(0.1, Math.min(0.5, video.duration * 0.08));
-                }
-            } catch (_) {}
-        };
-
-        setTimeout(() => {
-            skipFrame();
-            startVideo();
-        }, 150);
-
-        video.addEventListener("playing", () => {
-            playbackStarted = true;
-            skipFrame();
-        });
-
-        video.addEventListener("loadedmetadata", () => {
-            video.style.visibility = "visible";
-            skipFrame();
-            startVideo();
-        });
-
-        video.addEventListener("canplaythrough", () => {
-            video.style.visibility = "visible";
-            skipFrame();
-            startVideo();
-        });
-
-        video.addEventListener("stalled", () => {
-            skipFrame();
-            startVideo();
-        });
-    });
-
-    window.addEventListener("beforeunload", () => clearInterval(shooterInterval), { once: true });
-
-    function applyLanguage(lang) {
-        // Update all elements with data-tr / data-en
-        document.querySelectorAll("[data-tr][data-en]").forEach(el => {
-            const text = el.getAttribute(`data-${lang}`);
-            if (text) {
-                // Check if the element is an input-like (label etc) or has innerHTML needs
-                if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
-                    // skip — handled by placeholder
-                } else {
-                    el.innerHTML = text;
-                }
-            }
-        });
-
-        // Update placeholders
-        document.querySelectorAll(`[data-${lang}-ph]`).forEach(el => {
-            el.placeholder = el.getAttribute(`data-${lang}-ph`);
-        });
-
-        // Update page title
-        document.title = lang === "tr"
-            ? "Skymoon Studios — Hayalleri Kodluyoruz"
-            : "Skymoon Studios — Coding Dreams";
-    }
-
 })();

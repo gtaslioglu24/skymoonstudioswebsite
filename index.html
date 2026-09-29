@@ -2,420 +2,511 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skymoon Studios — Hayalleri Kodluyoruz</title>
-    <meta name="description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' data: blob: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'">
-    <link rel="icon" type="image/png" href="skymoonstudioslogo.png">
-    <link rel="shortcut icon" type="image/png" href="skymoonstudioslogo.png">
-    <link rel="apple-touch-icon" href="skymoonstudioslogo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Skymoon Studios — Dijital Ürün Stüdyosu</title>
+    <meta name="description" content="Skymoon Studios, web, mobil ve yapay zekâ destekli ürünleri tasarımdan yayına kadar uçtan uca geliştiren İstanbul merkezli bir yazılım stüdyosudur.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' data: blob: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
+    <meta name="theme-color" content="#0d0b09">
+    <link rel="canonical" href="https://www.skymoonstudios.com/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.skymoonstudios.com/">
     <meta property="og:site_name" content="Skymoon Studios">
-    <meta property="og:title" content="Skymoon Studios — Hayalleri Kodluyoruz">
-    <meta property="og:description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
-    <meta property="og:image" content="/skymoonstudioslogo.png">
-    <meta property="og:image:alt" content="Skymoon Studios Logo">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:title" content="Skymoon Studios — Dijital Ürün Stüdyosu">
+    <meta property="og:description" content="Web, mobil ve yapay zekâ destekli ürünleri tasarımdan yayına kadar uçtan uca geliştiriyoruz.">
+    <meta property="og:image" content="https://www.skymoonstudios.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Skymoon Studios — Fikirleri ürüne dönüştürüyoruz.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Skymoon Studios — Hayalleri Kodluyoruz">
-    <meta name="twitter:description" content="Skymoon Studios — Yazılım, tasarım ve dijital deneyim stüdyosu.">
-    <meta name="twitter:image" content="/skymoonstudioslogo.png">
+    <meta name="twitter:title" content="Skymoon Studios — Dijital Ürün Stüdyosu">
+    <meta name="twitter:description" content="Web, mobil ve yapay zekâ destekli ürünleri tasarımdan yayına kadar uçtan uca geliştiriyoruz.">
+    <meta name="twitter:image" content="https://www.skymoonstudios.com/og-image.jpg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Skymoon Studios",
+        "url": "https://www.skymoonstudios.com/",
+        "logo": "https://www.skymoonstudios.com/apple-touch-icon.png",
+        "email": "contact.skymoonstudios@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "İstanbul", "addressCountry": "TR" },
+        "founder": { "@type": "Person", "name": "Gökay Deniz TASLIOĞLU", "sameAs": "https://www.linkedin.com/in/gokay-deniz-taslioglu/" }
+    }
+    </script>
+    <script src="boot.js?v=2026-09-29h"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=2026-09-29h">
 </head>
 <body>
-    <!-- Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-aura" id="cursorAura"></div>
+    <a class="skip-link" href="#main" data-tr="İçeriğe geç" data-en="Skip to content">İçeriğe geç</a>
 
-    <!-- Starfield Canvas -->
-    <canvas id="starfield"></canvas>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="cursor-aura" aria-hidden="true"></div>
+    <canvas id="starfield" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
 
-    <!-- Grain -->
-    <div class="grain"></div>
-
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-inner">
+    <!-- Preloader (first visit per session only) -->
+    <div class="preloader" aria-hidden="true">
+        <div class="pre-inner">
             <div class="pre-ring">
-                <img src="skymoonstudioslogo.png" alt="" class="pre-logo">
-                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>
+                <img src="assets/logo-128.webp" alt="" class="pre-logo" width="58" height="58">
+                <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46"/></svg>
             </div>
-            <div class="pre-text">
-                <span class="pre-l">S</span><span class="pre-l">k</span><span class="pre-l">y</span><span class="pre-l">m</span><span class="pre-l">o</span><span class="pre-l">o</span><span class="pre-l">n</span>
-            </div>
-            <div class="pre-sub">S T U D I O S</div>
-            <div class="pre-bar"><div class="pre-fill" id="preFill"></div></div>
+            <div class="pre-word">Skymoon <em>Studios</em></div>
         </div>
     </div>
 
     <!-- ─── NAV ─── -->
-    <nav class="nav" id="nav">
-        <div class="nav-inner">
-            <a href="#hero" class="brand">
-                <img src="skymoonstudioslogo.png" alt="Skymoon Studios" class="brand-logo">
-                <span>skymoon <em>studios</em></span>
+    <header class="nav" id="nav">
+        <div class="nav-island">
+            <a href="#hero" class="brand" aria-label="Skymoon Studios — ana sayfa">
+                <img src="assets/logo-64.webp" alt="" class="brand-logo" width="32" height="32">
+                <span class="brand-word">Skymoon <em>Studios</em></span>
             </a>
-            <div class="nav-links" id="navLinks">
-                <a href="#about" class="nav-link" data-tr="hakkımızda" data-en="about">hakkımızda</a>
-                <a href="#services" class="nav-link" data-tr="hizmetler" data-en="services">hizmetler</a>
-                <a href="#work" class="nav-link" data-tr="projeler" data-en="projects">projeler</a>
-                <a href="#process" class="nav-link" data-tr="süreç" data-en="process">süreç</a>
-                <a href="#contact" class="nav-link" data-tr="iletişim" data-en="contact">iletişim</a>
-            </div>
-            <div class="nav-toggles">
-                <button class="toggle-btn" id="themeToggle" aria-label="Tema değiştir">
-                    <span class="toggle-icon sun">☀</span>
-                    <span class="toggle-icon moon">☾</span>
+            <nav class="nav-links" aria-label="Ana menü">
+                <a href="#about" class="nav-link" data-tr="Stüdyo" data-en="Studio">Stüdyo</a>
+                <a href="#services" class="nav-link" data-tr="Hizmetler" data-en="Services">Hizmetler</a>
+                <a href="#work" class="nav-link" data-tr="Projeler" data-en="Work">Projeler</a>
+                <a href="#partners" class="nav-link" data-tr="Ortaklar" data-en="Partners">Ortaklar</a>
+                <a href="#contact" class="nav-link" data-tr="İletişim" data-en="Contact">İletişim</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-btn" id="themeToggle" type="button" aria-label="Temayı değiştir" data-tr-aria="Temayı değiştir" data-en-aria="Toggle theme">
+                    <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                    <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
                 </button>
-                <button class="toggle-btn" id="langToggle" aria-label="Dil değiştir">
-                    <span class="lang-label">EN</span>
-                </button>
+                <button class="icon-btn lang-btn" id="langToggle" type="button" aria-label="Switch to English" data-tr-aria="Switch to English" data-en-aria="Türkçeye geç">EN</button>
+                <a href="#contact" class="btn btn--primary btn--sm nav-cta">
+                    <span data-tr="Proje başlat" data-en="Start a project">Proje başlat</span>
+                    <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+                </a>
+                <button class="burger" id="burger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
             </div>
-            <a href="#contact" class="nav-cta" data-tr="birlikte çalışalım" data-en="let's work together">birlikte çalışalım<span class="sparkle">✦</span></a>
-            <button class="burger" id="burger" aria-label="Menü"><span></span><span></span></button>
         </div>
-    </nav>
+    </header>
 
-    <!-- Mobile Drawer -->
-    <div class="drawer" id="drawer">
-        <div class="drawer-links">
-            <a href="#about" class="drawer-link" data-tr="hakkımızda" data-en="about">hakkımızda</a>
-            <a href="#services" class="drawer-link" data-tr="hizmetler" data-en="services">hizmetler</a>
-            <a href="#work" class="drawer-link" data-tr="projeler" data-en="projects">projeler</a>
-            <a href="#process" class="drawer-link" data-tr="süreç" data-en="process">süreç</a>
-            <a href="#contact" class="drawer-link" data-tr="iletişim" data-en="contact">iletişim</a>
-        </div>
+    <!-- Mobile drawer -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+        <nav class="drawer-links" aria-label="Mobil menü">
+            <a href="#about" class="drawer-link"><span class="dl-num">01</span><span data-tr="Stüdyo" data-en="Studio">Stüdyo</span></a>
+            <a href="#services" class="drawer-link"><span class="dl-num">02</span><span data-tr="Hizmetler" data-en="Services">Hizmetler</span></a>
+            <a href="#work" class="drawer-link"><span class="dl-num">03</span><span data-tr="Projeler" data-en="Work">Projeler</span></a>
+            <a href="#partners" class="drawer-link"><span class="dl-num">04</span><span data-tr="Ortaklar" data-en="Partners">Ortaklar</span></a>
+            <a href="#contact" class="drawer-link"><span class="dl-num">05</span><span data-tr="İletişim" data-en="Contact">İletişim</span></a>
+        </nav>
+        <a href="mailto:contact.skymoonstudios@gmail.com" class="drawer-mail">contact.skymoonstudios@gmail.com</a>
     </div>
+
+    <main id="main" tabindex="-1">
 
     <!-- ═══════════════ HERO ═══════════════ -->
     <section class="hero" id="hero">
-        <div class="hero-inner container">
-            <h1 class="hero-h1">
-                <span class="line"><span class="word" data-tr="Hayalleri" data-en="We code">Hayalleri</span></span>
-                <span class="line"><span class="word glow-text" data-tr="kodluyoruz" data-en="dreams">kodluyoruz</span></span>
-            </h1>
-            <p class="hero-p" data-tr="Fikirlerinizi sıcak, samimi ve estetik dijital deneyimlere dönüştürmek için buradayız. Her piksel özenle, her satır sevgiyle." data-en="We're here to transform your ideas into warm, elegant digital experiences. Every pixel with care, every line with love.">Fikirlerinizi sıcak, samimi ve estetik dijital deneyimlere dönüştürmek için buradayız. Her piksel özenle, her satır sevgiyle.</p>
-            <div class="hero-btns">
-                <a href="#work" class="btn-glow">
-                    <span class="btn-glow-bg"></span>
-                    <span class="btn-glow-text" data-tr="projelerimiz →" data-en="our projects →">projelerimiz →</span>
-                </a>
-                <a href="#contact" class="btn-ghost" data-tr="iletişim" data-en="contact">iletişim</a>
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <span class="badge hero-in" style="--d:0"><span class="badge-dot"></span><span data-tr="İstanbul merkezli yazılım stüdyosu" data-en="Software studio based in Istanbul">İstanbul merkezli yazılım stüdyosu</span></span>
+                <h1 class="hero-title">
+                    <span class="line"><span class="word" style="--d:1" data-tr="Fikirleri <em>ürüne</em>" data-en="We turn ideas">Fikirleri <em>ürüne</em></span></span>
+                    <span class="line"><span class="word" style="--d:2" data-tr="dönüştürüyoruz." data-en="into <em>products.</em>">dönüştürüyoruz.</span></span>
+                </h1>
+                <p class="hero-lead hero-in" style="--d:3" data-tr="Web, mobil ve yapay zekâ destekli ürünleri; strateji ve tasarımdan geliştirme ve yayına kadar uçtan uca hayata geçiriyoruz." data-en="We design, build and ship web, mobile and AI-powered products — from strategy and design through engineering and launch.">Web, mobil ve yapay zekâ destekli ürünleri; strateji ve tasarımdan geliştirme ve yayına kadar uçtan uca hayata geçiriyoruz.</p>
+                <div class="hero-actions hero-in" style="--d:4">
+                    <a href="#work" class="btn btn--primary">
+                        <span data-tr="Projeleri incele" data-en="View our work">Projeleri incele</span>
+                        <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+                    </a>
+                    <a href="#contact" class="link-arrow" data-tr="Bize ulaşın <span aria-hidden='true'>→</span>" data-en="Get in touch <span aria-hidden='true'>→</span>">Bize ulaşın <span aria-hidden="true">→</span></a>
+                </div>
+                <dl class="hero-meta hero-in" style="--d:5">
+                    <div><dt data-tr="Canlı ürün" data-en="Live products">Canlı ürün</dt><dd>02</dd></div>
+                    <div><dt data-tr="Platform" data-en="Platforms">Platform</dt><dd>Web · iOS · Android</dd></div>
+                    <div><dt data-tr="Odak" data-en="Focus">Odak</dt><dd data-tr="Ürün & yapay zekâ" data-en="Product & AI">Ürün & yapay zekâ</dd></div>
+                </dl>
+            </div>
+
+            <div class="hero-visual hero-in" style="--d:3" aria-hidden="true">
+                <div class="orbit orbit-1"><span class="orbit-dot"></span></div>
+                <div class="orbit orbit-2"><span class="orbit-dot"></span></div>
+                <div class="orbit orbit-3"></div>
+                <div class="moon">
+                    <div class="moon-glow"></div>
+                    <img src="assets/logo-600.webp" alt="" class="moon-img" width="600" height="600" fetchpriority="high">
+                </div>
+                <div class="float-chip chip-a"><span class="chip-dot"></span>StyleUpS<small data-tr="Mobil uygulama · yakında" data-en="Mobile app · coming soon">Mobil uygulama · yakında</small></div>
+                <div class="float-chip chip-b"><span class="chip-dot"></span>Skymoon GPA<small data-tr="Web uygulaması · yayında" data-en="Web app · live">Web uygulaması · yayında</small></div>
             </div>
         </div>
-
-        <!-- Floating orbit elements -->
-        <div class="orbit-ring orbit-ring-1"></div>
-        <div class="orbit-ring orbit-ring-2"></div>
-        <div class="orbit-ring orbit-ring-3"></div>
-
-
+        <a href="#about" class="scroll-cue" aria-label="Aşağı kaydır" data-tr-aria="Aşağı kaydır" data-en-aria="Scroll down"><span></span></a>
     </section>
+
+    <!-- Capability marquee -->
+    <div class="marquee" aria-hidden="true">
+        <div class="mq-track">
+            <span data-tr="Web geliştirme" data-en="Web development">Web geliştirme</span><i>✦</i>
+            <span data-tr="Mobil uygulama" data-en="Mobile apps">Mobil uygulama</span><i>✦</i>
+            <span data-tr="Arayüz & deneyim tasarımı" data-en="Interface & experience design">Arayüz & deneyim tasarımı</span><i>✦</i>
+            <span data-tr="Yapay zekâ entegrasyonu" data-en="AI integration">Yapay zekâ entegrasyonu</span><i>✦</i>
+            <span data-tr="Backend & API" data-en="Backend & API">Backend & API</span><i>✦</i>
+            <span data-tr="Ürün stratejisi" data-en="Product strategy">Ürün stratejisi</span><i>✦</i>
+            <span data-tr="Web geliştirme" data-en="Web development">Web geliştirme</span><i>✦</i>
+            <span data-tr="Mobil uygulama" data-en="Mobile apps">Mobil uygulama</span><i>✦</i>
+            <span data-tr="Arayüz & deneyim tasarımı" data-en="Interface & experience design">Arayüz & deneyim tasarımı</span><i>✦</i>
+            <span data-tr="Yapay zekâ entegrasyonu" data-en="AI integration">Yapay zekâ entegrasyonu</span><i>✦</i>
+            <span data-tr="Backend & API" data-en="Backend & API">Backend & API</span><i>✦</i>
+            <span data-tr="Ürün stratejisi" data-en="Product strategy">Ürün stratejisi</span><i>✦</i>
+        </div>
+    </div>
 
     <!-- ═══════════════ ABOUT ═══════════════ -->
     <section class="section" id="about">
         <div class="container about-grid">
-            <div class="about-left rv">
-                <span class="eyebrow"><span class="ey-line"></span><span data-tr="hakkımızda" data-en="about us">hakkımızda</span></span>
-                <h2 class="sec-title" data-tr="İyi tasarım<br><span class='glow-text'>hissedilir,</span><br>açıklanmaz." data-en="Good design<br><span class='glow-text'>is felt,</span><br>not explained.">İyi tasarım<br><span class="glow-text">hissedilir,</span><br>açıklanmaz.</h2>
+            <div class="about-head rv">
+                <span class="eyebrow"><span class="ey-num">01</span><span data-tr="Stüdyo" data-en="The studio">Stüdyo</span></span>
+                <h2 class="h2" data-tr="İyi tasarım <em>hissedilir,</em> açıklanmaz." data-en="Good design is <em>felt,</em> not explained.">İyi tasarım <em>hissedilir,</em> açıklanmaz.</h2>
             </div>
-            <div class="about-right rv" data-d=".15">
-                <p class="lead-p" data-tr="Skymoon Studios olarak yazılımı sadece kod olarak görmüyoruz — onu sıcak bir deneyime dönüştürüyoruz." data-en="At Skymoon Studios, we don't see software as just code — we turn it into a warm experience.">Skymoon Studios olarak yazılımı sadece kod olarak görmüyoruz — onu sıcak bir deneyime dönüştürüyoruz.</p>
-                <p class="body-p" data-tr="Kullanıcı deneyimini ön planda tutarak estetik ve fonksiyonelliği bir arada sunuyoruz. Mobil uygulamalardan web platformlarına, UI/UX tasarımından backend mimarisine kadar geniş bir yelpazede hizmet veriyoruz." data-en="Prioritizing user experience, we deliver aesthetics and functionality together. From mobile apps to web platforms, from UI/UX design to backend architecture.">Kullanıcı deneyimini ön planda tutarak estetik ve fonksiyonelliği bir arada sunuyoruz. Mobil uygulamalardan web platformlarına, UI/UX tasarımından backend mimarisine kadar geniş bir yelpazede hizmet veriyoruz.</p>
-                <div class="feature-list">
-                    <div class="feature-pill rv" data-d=".1">
-                        <div class="fp-glow"></div>
-                        <div class="fp-text"><strong data-tr="Hızlı & Verimli" data-en="Fast & Efficient">Hızlı & Verimli</strong><span data-tr="Agile ile çevik geliştirme" data-en="Agile development methodology">Agile ile çevik geliştirme</span></div>
-                    </div>
-                    <div class="feature-pill rv" data-d=".2">
-                        <div class="fp-glow"></div>
-                        <div class="fp-text"><strong data-tr="Estetik & İşlevsel" data-en="Aesthetic & Functional">Estetik & İşlevsel</strong><span data-tr="Tasarım odaklı mühendislik" data-en="Design-driven engineering">Tasarım odaklı mühendislik</span></div>
-                    </div>
-                    <div class="feature-pill rv" data-d=".3">
-                        <div class="fp-glow"></div>
-                        <div class="fp-text"><strong data-tr="Samimi & Özenli" data-en="Friendly & Meticulous">Samimi & Özenli</strong><span data-tr="Her projeye sevgiyle yaklaşıyoruz" data-en="We approach every project with care">Her projeye sevgiyle yaklaşıyoruz</span></div>
-                    </div>
-                </div>
+            <div class="about-body">
+                <p class="lead rv" data-tr="Skymoon Studios, yazılımı yalnızca çalışan kod olarak değil, insanların her gün kullanmak isteyeceği bir deneyim olarak ele alır." data-en="Skymoon Studios treats software not just as working code, but as an experience people genuinely want to return to every day.">Skymoon Studios, yazılımı yalnızca çalışan kod olarak değil, insanların her gün kullanmak isteyeceği bir deneyim olarak ele alır.</p>
+                <p class="body rv" data-tr="Mühendislik disiplinini tasarım hassasiyetiyle birleştiriyoruz. Mobil uygulamalardan web platformlarına, arayüz tasarımından backend mimarisine kadar ürünün her katmanını aynı özenle inşa ediyoruz." data-en="We combine engineering discipline with a designer's eye. From mobile apps to web platforms, from interface design to backend architecture, we build every layer of a product with the same level of care.">Mühendislik disiplinini tasarım hassasiyetiyle birleştiriyoruz. Mobil uygulamalardan web platformlarına, arayüz tasarımından backend mimarisine kadar ürünün her katmanını aynı özenle inşa ediyoruz.</p>
+                <ol class="principles">
+                    <li class="rv">
+                        <span class="pr-num">01</span>
+                        <div><h3 data-tr="Odaklı ve hızlı teslimat" data-en="Focused, fast delivery">Odaklı ve hızlı teslimat</h3><p data-tr="Kısa sprintler, net kilometre taşları ve her aşamada şeffaf ilerleme." data-en="Short sprints, clear milestones and transparent progress at every stage.">Kısa sprintler, net kilometre taşları ve her aşamada şeffaf ilerleme.</p></div>
+                    </li>
+                    <li class="rv">
+                        <span class="pr-num">02</span>
+                        <div><h3 data-tr="Tasarım odaklı mühendislik" data-en="Design-led engineering">Tasarım odaklı mühendislik</h3><p data-tr="Estetik ve performansı birbirinden ayırmadan, ölçeklenebilir ürünler." data-en="Scalable products where aesthetics and performance are never a trade-off.">Estetik ve performansı birbirinden ayırmadan, ölçeklenebilir ürünler.</p></div>
+                    </li>
+                    <li class="rv">
+                        <span class="pr-num">03</span>
+                        <div><h3 data-tr="Uzun vadeli ortaklık" data-en="Long-term partnership">Uzun vadeli ortaklık</h3><p data-tr="Yayından sonra da yanınızdayız: bakım, ölçümleme ve sürekli iyileştirme." data-en="We stay with you after launch: maintenance, analytics and continuous improvement.">Yayından sonra da yanınızdayız: bakım, ölçümleme ve sürekli iyileştirme.</p></div>
+                    </li>
+                </ol>
             </div>
         </div>
     </section>
 
     <!-- ═══════════════ SERVICES ═══════════════ -->
-    <section class="section section--dark" id="services">
+    <section class="section section--alt" id="services">
         <div class="container">
-            <div class="center-head">
-                <span class="eyebrow" data-tr="hizmetlerimiz" data-en="our services">hizmetlerimiz</span>
-                <h2 class="sec-title" data-tr="Neler <span class='glow-text'>yapıyoruz</span>?" data-en="What do we <span class='glow-text'>do</span>?">Neler <span class="glow-text">yapıyoruz</span>?</h2>
+            <div class="sec-head rv">
+                <span class="eyebrow"><span class="ey-num">02</span><span data-tr="Hizmetler" data-en="Services">Hizmetler</span></span>
+                <h2 class="h2" data-tr="Fikirden yayına, <em>tek ekip.</em>" data-en="From idea to launch, <em>one team.</em>">Fikirden yayına, <em>tek ekip.</em></h2>
+                <p class="sec-sub" data-tr="Ürününüzün ihtiyaç duyduğu her disiplini tek çatı altında topluyoruz." data-en="Every discipline your product needs, under one roof.">Ürününüzün ihtiyaç duyduğu her disiplini tek çatı altında topluyoruz.</p>
             </div>
-            <div class="services-grid">
-                <div class="service-tile rv" data-d="0">
-                    <div class="tile-border"></div>
-                    <div class="tile-shine"></div>
-                    <div class="tile-content">
-                        <div class="tile-head">
-                            <span class="tile-icon" aria-hidden="true">
-                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                                    <rect x="4" y="5" width="16" height="11" rx="2.2" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
-                                    <path d="M2.75 19H21.25" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M9 16V18" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M15 16V18" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M8.5 20H15.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                </svg>
-                            </span>
+            <div class="bento">
+                <article class="bezel tile tile--wide rv">
+                    <div class="bezel-core tile-core">
+                        <div class="tile-top">
+                            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M2.5 19.5h19M9.5 16.5v3M14.5 16.5v3"/></svg></span>
+                            <span class="tile-idx">/01</span>
                         </div>
-                        <h3 data-tr="Web Geliştirme" data-en="Web Development">Web Geliştirme</h3>
-                        <p data-tr="Modern, performanslı ve SEO-dostu web uygulamaları. Tüm cihazlarda mükemmel görünüm." data-en="Modern, performant and SEO-friendly web applications. Perfect look on all devices.">Modern, performanslı ve SEO-dostu web uygulamaları. Tüm cihazlarda mükemmel görünüm.</p>
-                        <div class="tile-tags"><span>React</span><span>Next.js</span><span>TypeScript</span></div>
-                        <div class="tile-arrow">→</div>
+                        <h3 data-tr="Web geliştirme" data-en="Web development">Web geliştirme</h3>
+                        <p data-tr="Hızlı, erişilebilir ve arama motoru dostu web siteleri ve web uygulamaları. Her ekran boyutunda kusursuz deneyim." data-en="Fast, accessible, search-friendly websites and web applications that feel right on every screen size.">Hızlı, erişilebilir ve arama motoru dostu web siteleri ve web uygulamaları. Her ekran boyutunda kusursuz deneyim.</p>
+                        <ul class="tags"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Vite</li></ul>
                     </div>
-                </div>
-                <div class="service-tile rv" data-d=".08">
-                    <div class="tile-border"></div>
-                    <div class="tile-shine"></div>
-                    <div class="tile-content">
-                        <div class="tile-head">
-                            <span class="tile-icon" aria-hidden="true">
-                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                                    <rect x="7" y="2.75" width="10" height="18.5" rx="2.4" stroke="currentColor" stroke-width="1.65"/>
-                                    <path d="M10.2 5.25H13.8" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M10.7 17.8H13.3" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <circle cx="12" cy="19.1" r="0.9" fill="currentColor"/>
-                                </svg>
-                            </span>
+                </article>
+                <article class="bezel tile rv">
+                    <div class="bezel-core tile-core">
+                        <div class="tile-top">
+                            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 5h3M11 18.5h2"/></svg></span>
+                            <span class="tile-idx">/02</span>
                         </div>
-                        <h3 data-tr="Mobil Uygulama" data-en="Mobile App">Mobil Uygulama</h3>
-                        <p data-tr="iOS ve Android için native ve cross-platform uygulamalar. Sezgisel ve akıcı deneyim." data-en="Native and cross-platform apps for iOS and Android. Intuitive and smooth experience.">iOS ve Android için native ve cross-platform uygulamalar. Sezgisel ve akıcı deneyim.</p>
-                        <div class="tile-tags"><span>Flutter</span><span>React Native</span><span>Swift</span></div>
-                        <div class="tile-arrow">→</div>
+                        <h3 data-tr="Mobil uygulama" data-en="Mobile apps">Mobil uygulama</h3>
+                        <p data-tr="iOS ve Android için sezgisel, akıcı ve mağaza yayınına hazır uygulamalar." data-en="Intuitive, fluid iOS and Android apps, ready for store release.">iOS ve Android için sezgisel, akıcı ve mağaza yayınına hazır uygulamalar.</p>
+                        <ul class="tags"><li>React Native</li><li>Expo</li><li>Swift</li></ul>
                     </div>
-                </div>
-                <div class="service-tile rv" data-d=".16">
-                    <div class="tile-border"></div>
-                    <div class="tile-shine"></div>
-                    <div class="tile-content">
-                        <div class="tile-head">
-                            <span class="tile-icon" aria-hidden="true">
-                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                                    <path d="M20 9.25c0-3.45-3.58-6.25-8-6.25S4 5.8 4 9.25C4 13.5 7.6 17 12.04 17H13c.83 0 1.5.67 1.5 1.5 0 .83-.67 1.5-1.5 1.5h-.25c-.69 0-1.25.56-1.25 1.25S11.56 22.5 12.25 22.5C16.47 22.5 20 18.97 20 14.75V9.25Z" stroke="currentColor" stroke-width="1.65" stroke-linejoin="round"/>
-                                    <circle cx="8.2" cy="9.1" r="1.05" fill="currentColor"/>
-                                    <circle cx="11.8" cy="7.5" r="1.05" fill="currentColor"/>
-                                    <circle cx="15.4" cy="9.1" r="1.05" fill="currentColor"/>
-                                    <circle cx="13.1" cy="12.4" r="1.05" fill="currentColor"/>
-                                </svg>
-                            </span>
+                </article>
+                <article class="bezel tile rv">
+                    <div class="bezel-core tile-core">
+                        <div class="tile-top">
+                            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20 14.5 9.5M14.5 9.5l2-5 3 3-5 2Z"/><path d="M5 5.5h4M7 3.5v4M17.5 15.5h4M19.5 13.5v4"/></svg></span>
+                            <span class="tile-idx">/03</span>
                         </div>
-                        <h3 data-tr="UI/UX Tasarım" data-en="UI/UX Design">UI/UX Tasarım</h3>
-                        <p data-tr="Kullanıcı odaklı, estetik arayüzler. Wireframe'den prototipe, tasarım sistemi oluşturma." data-en="User-centered, aesthetic interfaces. From wireframes to prototypes and design systems.">Kullanıcı odaklı, estetik arayüzler. Wireframe'den prototipe, tasarım sistemi oluşturma.</p>
-                        <div class="tile-tags"><span>Figma</span><span>Prototype</span><span>Design System</span></div>
-                        <div class="tile-arrow">→</div>
+                        <h3 data-tr="Arayüz & deneyim tasarımı" data-en="Interface & experience design">Arayüz & deneyim tasarımı</h3>
+                        <p data-tr="Kullanıcı araştırmasından prototipe ve kalıcı bir tasarım sistemine kadar." data-en="From user research to prototypes and a lasting design system.">Kullanıcı araştırmasından prototipe ve kalıcı bir tasarım sistemine kadar.</p>
+                        <ul class="tags"><li>Figma</li><li>Prototyping</li><li>Design systems</li></ul>
                     </div>
-                </div>
-                <div class="service-tile rv" data-d=".24">
-                    <div class="tile-border"></div>
-                    <div class="tile-shine"></div>
-                    <div class="tile-content">
-                        <div class="tile-head">
-                            <span class="tile-icon" aria-hidden="true">
-                                <svg class="tile-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                                    <circle cx="12" cy="12" r="4.8" stroke="currentColor" stroke-width="1.65"/>
-                                    <path d="M12 3.2V5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M12 19v1.8" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M3.2 12H5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M19 12h1.8" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M6.5 6.5l1.25 1.25" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M16.25 16.25l1.25 1.25" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M17.5 6.5l-1.25 1.25" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                    <path d="M7.75 16.25L6.5 17.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/>
-                                </svg>
-                            </span>
+                </article>
+                <article class="bezel tile tile--wide rv">
+                    <div class="bezel-core tile-core">
+                        <div class="tile-top">
+                            <span class="tile-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"/><path d="M4.5 5.5v6.5c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5V5.5M4.5 12v6.5c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5V12"/></svg></span>
+                            <span class="tile-idx">/04</span>
                         </div>
-                        <h3 data-tr="Backend & API" data-en="Backend & API">Backend & API</h3>
-                        <p data-tr="Ölçeklenebilir backend altyapıları. Güçlü API çözümleri ve güvenli mimari." data-en="Scalable backend infrastructure. Powerful API solutions and secure architecture.">Ölçeklenebilir backend altyapıları. Güçlü API çözümleri ve güvenli mimari.</p>
-                        <div class="tile-tags"><span>Node.js</span><span>Python</span><span>PostgreSQL</span></div>
-                        <div class="tile-arrow">→</div>
+                        <h3 data-tr="Backend, API & yapay zekâ" data-en="Backend, API & AI">Backend, API & yapay zekâ</h3>
+                        <p data-tr="Ölçeklenebilir altyapılar, güvenli API'ler ve ürüne gerçek değer katan yapay zekâ entegrasyonları." data-en="Scalable infrastructure, secure APIs and AI integrations that add real value to the product.">Ölçeklenebilir altyapılar, güvenli API'ler ve ürüne gerçek değer katan yapay zekâ entegrasyonları.</p>
+                        <ul class="tags"><li>Node.js</li><li>Python</li><li>Firebase</li><li>PostgreSQL</li><li>OpenAI API</li></ul>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ PORTFOLIO ═══════════════ -->
+    <!-- ═══════════════ WORK ═══════════════ -->
     <section class="section" id="work">
         <div class="container">
-            <div class="center-head">
-                <span class="eyebrow" data-tr="projelerimiz" data-en="our projects">projelerimiz</span>
-                <h2 class="sec-title" data-tr="Son <span class='glow-text'>çalışmalarımız</span>" data-en="Our latest <span class='glow-text'>work</span>">Son <span class="glow-text">çalışmalarımız</span></h2>
+            <div class="sec-head sec-head--split rv">
+                <div>
+                    <span class="eyebrow"><span class="ey-num">03</span><span data-tr="Projeler" data-en="Selected work">Projeler</span></span>
+                    <h2 class="h2" data-tr="Seçili <em>çalışmalar</em>" data-en="Selected <em>work</em>">Seçili <em>çalışmalar</em></h2>
+                </div>
+                <p class="sec-sub" data-tr="Fikir aşamasından yayına taşıdığımız, gerçek kullanıcılarla buluşan ürünler." data-en="Products we took from first idea to launch — now in the hands of real users.">Fikir aşamasından yayına taşıdığımız, gerçek kullanıcılarla buluşan ürünler.</p>
             </div>
 
-            <!-- Project 1 -->
-            <div class="project-showcase rv">
-                <div class="ps-visual">
-                    <div class="ps-glow"></div>
-                    <div class="macbook-wrap">
-                        <div class="macbook-screen">
-                            <div class="browser-mock">
-                                <div class="bm-body">
-                                    <video autoplay muted loop playsinline webkit-playsinline preload="auto" class="bm-video" crossorigin="anonymous">
-                                        <source src="styleupswebsitevideonew.mp4" type="video/mp4">
-                                    </video>
-                                </div>
+            <!-- Project 01 — Skymoon GPA -->
+            <article class="bezel project rv">
+                <div class="bezel-core project-core">
+                    <div class="project-visual">
+                        <div class="pv-glow"></div>
+                        <div class="browser">
+                            <div class="browser-bar">
+                                <span class="bb-dots"><i></i><i></i><i></i></span>
+                                <span class="bb-url">skymoongpa.site</span>
+                            </div>
+                            <div class="browser-body browser-body--scroll">
+                                <img src="skymoongpa-screen.jpg" alt="Skymoon GPA simülasyon ekranı: mevcut ortalama 3.16, tahmini yeni ortalama 3.26" loading="lazy" decoding="async" width="1600" height="1000" data-tr-alt="Skymoon GPA simülasyon ekranı: mevcut ortalama 3.16, tahmini yeni ortalama 3.26" data-en-alt="Skymoon GPA simulation screen: current GPA 3.16, projected GPA 3.26">
                             </div>
                         </div>
-                        <div class="macbook-base">
-                            <div class="macbook-notch"></div>
-                        </div>
-                        <div class="macbook-shadow"></div>
                     </div>
-                    <div class="ps-badge ps-badge-1"><span>✨</span> Live Project</div>
+                    <div class="project-info">
+                        <div class="p-meta"><span class="p-num">01</span><span class="p-cat" data-tr="Web uygulaması" data-en="Web application">Web uygulaması</span><span class="p-year">2026</span></div>
+                        <h3 class="p-title">Skymoon GPA</h3>
+                        <p class="p-desc" data-tr="Koç Üniversitesi öğrencileri için not ortalaması hesaplama ve senaryo aracı. “Bu dönem şu notları alırsam ortalamam kaç olur?” sorusunu anında yanıtlar; transkripti yapıştırmak yeterli." data-en="A GPA calculator and what-if planner for Koç University students. It instantly answers “what will my GPA be if I get these grades this term?” — just paste your transcript.">Koç Üniversitesi öğrencileri için not ortalaması hesaplama ve senaryo aracı. “Bu dönem şu notları alırsam ortalamam kaç olur?” sorusunu anında yanıtlar; transkripti yapıştırmak yeterli.</p>
+                        <ul class="p-points">
+                            <li data-tr="Transkript içe aktarma, simülasyon ve hedef ortalama hesaplama" data-en="Transcript import, grade simulation and target-GPA planning">Transkript içe aktarma, simülasyon ve hedef ortalama hesaplama</li>
+                            <li data-tr="Sunucusuz mimari: veriler cihazdan hiç çıkmaz" data-en="Serverless by design: data never leaves the device">Sunucusuz mimari: veriler cihazdan hiç çıkmaz</li>
+                            <li data-tr="Çevrimdışı çalışan PWA, TR/EN dil ve koyu tema desteği" data-en="Offline-ready PWA with TR/EN and dark mode">Çevrimdışı çalışan PWA, TR/EN dil ve koyu tema desteği</li>
+                        </ul>
+                        <ul class="tags"><li>React 19</li><li>TypeScript</li><li>Vite</li><li>Tailwind CSS</li><li>PWA</li></ul>
+                        <a href="https://www.skymoongpa.site" class="btn btn--ghost" target="_blank" rel="noopener">
+                            <span data-tr="Siteyi ziyaret et" data-en="Visit the site">Siteyi ziyaret et</span>
+                            <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+                        </a>
+                    </div>
                 </div>
-                <div class="ps-info">
-                    <div class="ps-meta"><span class="meta-tag accent">Web Platform</span><span class="meta-tag">2026</span></div>
-                    <h3 class="ps-title">StyleUpS Website</h3>
-                    <p data-tr="StyleUpS markası için Next.js 15 ve React 19 ile geliştirilmiş modern landing page. Framer Motion animasyonları, çok dilli destek (TR/EN), responsive tasarım, gizlilik politikası, kullanım koşulları, destek ve hesap silme sayfalarıyla App Store yayınına hazır." data-en="A modern landing page built with Next.js 15 and React 19 for the StyleUpS brand. Framer Motion animations, multi-language support (TR/EN), responsive design, privacy policy, terms of use, support and account deletion pages — ready for App Store launch.">StyleUpS markası için Next.js 15 ve React 19 ile geliştirilmiş modern landing page. Framer Motion animasyonları, çok dilli destek (TR/EN), responsive tasarım, gizlilik politikası, kullanım koşulları, destek ve hesap silme sayfalarıyla App Store yayınına hazır.</p>
-                    <div class="tile-tags"><span>Next.js 15</span><span>React 19</span><span>TypeScript</span><span>Framer Motion</span></div>
-                </div>
-            </div>
+            </article>
 
-            <!-- Project 2 -->
-            <div class="project-showcase project-showcase--flip rv">
-                <div class="ps-visual">
-                    <div class="ps-glow"></div>
-                    <div class="iphone-mock">
-                        <div class="ip-screen">
-                            <img src="StyleUpSphotonew.jpg" alt="StyleUpS App" class="ip-screenshot" loading="lazy" decoding="async">
+            <!-- Project 02 — StyleUpS App -->
+            <article class="bezel project project--flip rv">
+                <div class="bezel-core project-core">
+                    <div class="project-visual">
+                        <div class="pv-glow"></div>
+                        <div class="phone">
+                            <span class="phone-glare" aria-hidden="true"></span>
+                            <div class="phone-screen">
+                                <span class="phone-island"></span>
+                                <img src="StyleUpSphotonew.jpg" alt="StyleUpS uygulamasında gardırop ekranı ve AI Stylist önerisi" loading="lazy" decoding="async" width="1290" height="2660" data-tr-alt="StyleUpS uygulamasında gardırop ekranı ve AI Stylist önerisi" data-en-alt="StyleUpS app wardrobe screen with the AI Stylist pick">
+                            </div>
                         </div>
                     </div>
-                    <div class="ps-badge ps-badge-2"><span>📱</span> App Store</div>
+                    <div class="project-info">
+                        <div class="p-meta"><span class="p-num">02</span><span class="p-cat" data-tr="Mobil uygulama" data-en="Mobile app">Mobil uygulama</span><span class="p-year">2026</span></div>
+                        <h3 class="p-title">StyleUpS</h3>
+                        <p class="p-desc" data-tr="Yapay zekâ destekli kişisel stil asistanı. Kullanıcılar gardıroplarını dijitalleştirir, ruh hâline ve renklere göre kombin önerileri alır ve görünümlerini toplulukla paylaşır." data-en="An AI-powered personal styling assistant. Users digitise their wardrobe, get outfit suggestions tuned to mood and colour, and share their looks with the community.">Yapay zekâ destekli kişisel stil asistanı. Kullanıcılar gardıroplarını dijitalleştirir, ruh hâline ve renklere göre kombin önerileri alır ve görünümlerini toplulukla paylaşır.</p>
+                        <ul class="p-points">
+                            <li data-tr="Kıyafet tanıma ve yapay zekâ ile kombin önerisi" data-en="Garment recognition and AI outfit recommendations">Kıyafet tanıma ve yapay zekâ ile kombin önerisi</li>
+                            <li data-tr="Katmanlı üyelik modeli ve uygulama içi abonelik" data-en="Tiered membership model with in-app subscriptions">Katmanlı üyelik modeli ve uygulama içi abonelik</li>
+                            <li data-tr="Sunucu taraflı içerik denetimi ve uygulama doğrulama güvenliği" data-en="Server-side content moderation and app attestation">Sunucu taraflı içerik denetimi ve uygulama doğrulama güvenliği</li>
+                        </ul>
+                        <ul class="tags"><li>React Native</li><li>Expo</li><li>Firebase</li><li>OpenAI API</li></ul>
+                    </div>
                 </div>
-                <div class="ps-info">
-                    <div class="ps-meta"><span class="meta-tag accent" data-tr="Mobil Uygulama" data-en="Mobile App">Mobil Uygulama</span><span class="meta-tag">2026</span></div>
-                    <h3 class="ps-title">StyleUpS App</h3>
-                    <p data-tr="Expo 54, React Native ve Firebase ile geliştirilen AI destekli gardırop asistanı. Kıyafet yükleme, AI kombin önerisi, proof tabanlı paylaşım, güvenli plan sistemi (Free/Invite/Premium), Cloud Functions moderasyonu ve App Check güvenliği ile tam donanımlı mobil uygulama." data-en="An AI-powered wardrobe assistant built with Expo 54, React Native and Firebase. Clothing upload, AI outfit suggestions, proof-based sharing, secure plan system (Free/Invite/Premium), Cloud Functions moderation and App Check security — a fully equipped mobile app.">Expo 54, React Native ve Firebase ile geliştirilen AI destekli gardırop asistanı. Kıyafet yükleme, AI kombin önerisi, proof tabanlı paylaşım, güvenli plan sistemi (Free/Invite/Premium), Cloud Functions moderasyonu ve App Check güvenliği ile tam donanımlı mobil uygulama.</p>
-                    <div class="tile-tags"><span>React Native</span><span>Expo 54</span><span>Firebase</span><span>OpenAI API</span></div>
+            </article>
+
+            <!-- Project 03 — StyleUpS Website -->
+            <article class="bezel project rv">
+                <div class="bezel-core project-core">
+                    <div class="project-visual">
+                        <div class="pv-glow"></div>
+                        <div class="browser">
+                            <div class="browser-bar">
+                                <span class="bb-dots"><i></i><i></i><i></i></span>
+                                <span class="bb-url">styleups.me</span>
+                            </div>
+                            <div class="browser-body browser-body--video">
+                                <video class="p-video" autoplay muted loop playsinline preload="metadata" aria-label="StyleUpS web sitesinin tanıtım kaydı">
+                                    <source src="styleupswebsitevideonew.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div class="p-meta"><span class="p-num">03</span><span class="p-cat" data-tr="Web platformu" data-en="Web platform">Web platformu</span><span class="p-year">2026</span></div>
+                        <h3 class="p-title" data-tr="StyleUpS web sitesi" data-en="StyleUpS website">StyleUpS web sitesi</h3>
+                        <p class="p-desc" data-tr="StyleUpS markasının tanıtım sitesi. Hareketli ve akıcı bir anlatımla ürünü tanıtırken, uygulama mağazası süreçleri için gereken yasal ve destek sayfalarını da tek çatı altında toplar." data-en="The marketing site for the StyleUpS brand. It tells the product story through fluid motion and brings together the legal and support pages required for app store review.">StyleUpS markasının tanıtım sitesi. Hareketli ve akıcı bir anlatımla ürünü tanıtırken, uygulama mağazası süreçleri için gereken yasal ve destek sayfalarını da tek çatı altında toplar.</p>
+                        <ul class="p-points">
+                            <li data-tr="Framer Motion ile akıcı, performanslı animasyonlar" data-en="Smooth, performant animations with Framer Motion">Framer Motion ile akıcı, performanslı animasyonlar</li>
+                            <li data-tr="Türkçe / İngilizce çok dilli yapı" data-en="Bilingual Turkish / English architecture">Türkçe / İngilizce çok dilli yapı</li>
+                            <li data-tr="Gizlilik, kullanım koşulları, destek ve hesap silme sayfaları" data-en="Privacy, terms, support and account deletion pages">Gizlilik, kullanım koşulları, destek ve hesap silme sayfaları</li>
+                        </ul>
+                        <ul class="tags"><li>Next.js 15</li><li>React 19</li><li>TypeScript</li><li>Framer Motion</li></ul>
+                        <a href="https://styleups.me" class="btn btn--ghost" target="_blank" rel="noopener">
+                            <span data-tr="Siteyi ziyaret et" data-en="Visit the site">Siteyi ziyaret et</span>
+                            <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </article>
         </div>
     </section>
 
-
-
-    <!-- ═══════════════ PROCESS ═══════════════ -->
-    <section class="section" id="process">
+    <!-- ═══════════════ PARTNERS ═══════════════ -->
+    <section class="section section--alt" id="partners">
         <div class="container">
-            <div class="center-head">
-                <span class="eyebrow" data-tr="sürecimiz" data-en="our process">sürecimiz</span>
-                <h2 class="sec-title" data-tr="Nasıl <span class='glow-text'>çalışıyoruz</span>?" data-en="How do we <span class='glow-text'>work</span>?">Nasıl <span class="glow-text">çalışıyoruz</span>?</h2>
+            <div class="sec-head rv">
+                <span class="eyebrow"><span class="ey-num">04</span><span lang="en">Business Partners</span></span>
+                <h2 class="h2" data-tr="Stüdyonun arkasındaki <em>isimler</em>" data-en="The people behind <em>the studio</em>">Stüdyonun arkasındaki <em>isimler</em></h2>
+                <p class="sec-sub" data-tr="Skymoon Studios, mühendislik ve iş dünyasını bir araya getiren bir vizyonla kuruldu." data-en="Skymoon Studios was founded on a vision that brings engineering and business together.">Skymoon Studios, mühendislik ve iş dünyasını bir araya getiren bir vizyonla kuruldu.</p>
             </div>
-            <div class="timeline">
-                <div class="timeline-line"><div class="timeline-progress" id="timelineProgress"></div></div>
-                <div class="tl-step rv" data-d="0">
-                    <div class="tl-dot"><span>01</span></div>
-                    <div class="tl-card">
-                        <div class="tile-border"></div>
-                        <div class="tl-card-inner">
-                            <h3 data-tr="Keşif & Analiz" data-en="Discovery & Analysis">Keşif & Analiz</h3>
-                            <p data-tr="Projenizi ve hedeflerinizi derinlemesine analiz edip en uygun çözümü planlıyoruz." data-en="We deeply analyze your project and goals to plan the best solution.">Projenizi ve hedeflerinizi derinlemesine analiz edip en uygun çözümü planlıyoruz.</p>
+
+            <div class="partners-grid">
+                <article class="bezel founder rv">
+                    <div class="bezel-core founder-core">
+                        <div class="founder-main">
+                        <div class="founder-id">
+                            <div class="monogram" aria-hidden="true"><span>GD</span><span class="mono-ring"></span></div>
+                            <div>
+                                <span class="role-tag" lang="en">Founder</span>
+                                <h3 class="founder-name">Gökay Deniz TASLIOĞLU</h3>
+                                <p class="founder-sub" data-tr="Kurucu · Ürün & Mühendislik" data-en="Founder · Product & Engineering">Kurucu · Ürün & Mühendislik</p>
+                            </div>
+                        </div>
+                        <p class="founder-bio" data-tr="Koç Üniversitesi'nde Bilgisayar Mühendisliği ve İşletme çift anadal öğrencisi. İnsansız hava araçları, gömülü yazılım ve otonom sistemler alanlarında ulusal ve uluslararası yarışmalarda takımlara liderlik etti; bu mühendislik birikimini Skymoon Studios'ta kullanıcı odaklı dijital ürünlere dönüştürüyor." data-en="Double major in Computer Engineering and Business Administration at Koç University. Has led teams in national and international competitions across UAVs, embedded software and autonomous systems — and now brings that engineering background to user-centred digital products at Skymoon Studios.">Koç Üniversitesi'nde Bilgisayar Mühendisliği ve İşletme çift anadal öğrencisi. İnsansız hava araçları, gömülü yazılım ve otonom sistemler alanlarında ulusal ve uluslararası yarışmalarda takımlara liderlik etti; bu mühendislik birikimini Skymoon Studios'ta kullanıcı odaklı dijital ürünlere dönüştürüyor.</p>
+                        <div class="founder-actions">
+                            <a href="Gokay-Deniz-Taslioglu-CV.pdf" class="btn btn--primary" target="_blank" rel="noopener">
+                                <span data-tr="Özgeçmişi görüntüle" data-en="View résumé">Özgeçmişi görüntüle</span>
+                                <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></svg></span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/gokay-deniz-taslioglu/" class="btn btn--ghost" target="_blank" rel="noopener">
+                                <svg class="btn-lead" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+                                <span>LinkedIn</span>
+                                <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+                            </a>
+                        </div>
                         </div>
                     </div>
-                </div>
-                <div class="tl-step rv" data-d=".1">
-                    <div class="tl-dot"><span>02</span></div>
-                    <div class="tl-card">
-                        <div class="tile-border"></div>
-                        <div class="tl-card-inner">
-                            <h3 data-tr="Tasarım" data-en="Design">Tasarım</h3>
-                            <p data-tr="Wireframe ve prototiplerle vizyonunuzu görselleştiriyoruz." data-en="We visualize your vision with wireframes and prototypes.">Wireframe ve prototiplerle vizyonunuzu görselleştiriyoruz.</p>
+                </article>
+                <article class="bezel founder rv">
+                    <div class="bezel-core founder-core">
+                        <div class="founder-main">
+                        <div class="founder-id">
+                            <div class="monogram monogram--alt" aria-hidden="true"><span>AE</span><span class="mono-ring"></span></div>
+                            <div>
+                                <span class="role-tag" lang="en">Business Partner</span>
+                                <h3 class="founder-name">Ahmet Emin Aktaş</h3>
+                                <p class="founder-sub" data-tr="Marketing Uzmanı" data-en="Marketing Specialist">Marketing Uzmanı</p>
+                            </div>
+                        </div>
+                        <p class="founder-bio" data-tr="Skymoon Studios'ta pazarlama, marka konumlandırma ve büyüme stratejilerinden sorumlu. Ürünlerimizin doğru kitleye doğru mesajla ulaşmasını sağlıyor." data-en="Responsible for marketing, brand positioning and growth strategy at Skymoon Studios — making sure our products reach the right audience with the right message.">Skymoon Studios'ta pazarlama, marka konumlandırma ve büyüme stratejilerinden sorumlu. Ürünlerimizin doğru kitleye doğru mesajla ulaşmasını sağlıyor.</p>
                         </div>
                     </div>
-                </div>
-                <div class="tl-step rv" data-d=".2">
-                    <div class="tl-dot"><span>03</span></div>
-                    <div class="tl-card">
-                        <div class="tile-border"></div>
-                        <div class="tl-card-inner">
-                            <h3 data-tr="Geliştirme" data-en="Development">Geliştirme</h3>
-                            <p data-tr="Modern teknolojilerle sprint bazlı sürekli ilerleme sağlıyoruz." data-en="We deliver continuous progress with modern technologies and sprint-based development.">Modern teknolojilerle sprint bazlı sürekli ilerleme sağlıyoruz.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tl-step rv" data-d=".3">
-                    <div class="tl-dot"><span>04</span></div>
-                    <div class="tl-card">
-                        <div class="tile-border"></div>
-                        <div class="tl-card-inner">
-                            <h3 data-tr="Lansman & Destek" data-en="Launch & Support">Lansman & Destek</h3>
-                            <p data-tr="Kapsamlı testlerden geçirip canlıya alıyor, sonrasında desteğe devam ediyoruz." data-en="We thoroughly test, launch, and continue to provide ongoing support.">Kapsamlı testlerden geçirip canlıya alıyor, sonrasında desteğe devam ediyoruz.</p>
-                        </div>
-                    </div>
-                </div>
+                </article>
             </div>
         </div>
     </section>
 
     <!-- ═══════════════ CONTACT ═══════════════ -->
-    <section class="section section--dark" id="contact">
+    <section class="section section--alt" id="contact">
         <div class="container contact-grid">
-            <div class="contact-left rv">
-                <span class="eyebrow" data-tr="iletişim" data-en="contact">iletişim</span>
-                <h2 class="sec-title" data-tr="Bir fikriniz mi var?<br><span class='glow-text'>Konuşalım.</span>" data-en="Have an idea?<br><span class='glow-text'>Let's talk.</span>">Bir fikriniz mi var?<br><span class="glow-text">Konuşalım.</span></h2>
-                <p class="body-p" data-tr="Projenizi hayata geçirmek için buradayız. Birlikte harika şeyler yaratalım." data-en="We're here to bring your project to life. Let's create amazing things together.">Projenizi hayata geçirmek için buradayız. Birlikte harika şeyler yaratalım.</p>
-                <div class="contact-cards">
-                    <a href="mailto:contact@skymoonstudios.com" class="cc-item">
-                        <div class="tile-border"></div>
-                        <div class="cc-inner"><span class="cc-icon">✉️</span><div><small>Email</small><span>contact@skymoonstudios.com</span></div></div>
-                    </a>
-                    <div class="cc-item">
-                        <div class="tile-border"></div>
-                        <div class="cc-inner"><span class="cc-icon">📍</span><div><small>Konum</small><span>İstanbul, Türkiye</span></div></div>
-                    </div>
-                </div>
-                <div class="socials">
-                    <a href="#" class="soc-btn" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                    <a href="#" class="soc-btn" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                    <a href="#" class="soc-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                    <a href="#" class="soc-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                </div>
+            <div class="contact-copy rv">
+                <span class="eyebrow"><span class="ey-num">05</span><span data-tr="İletişim" data-en="Contact">İletişim</span></span>
+                <h2 class="h2 h2--xl" data-tr="Bir sonraki iş ortağımız <em>siz olabilirsiniz.</em>" data-en="Our next partner <em>could be you.</em>">Bir sonraki iş ortağımız <em>siz olabilirsiniz.</em></h2>
+                <p class="body" data-tr="Yatırım, iş birliği veya ortak ürün geliştirme için görüşmeye her zaman açığız." data-en="We are always open to conversations about investment, collaboration or co-building a product.">Yatırım, iş birliği veya ortak ürün geliştirme için görüşmeye her zaman açığız.</p>
+                <ul class="contact-list">
+                    <li>
+                        <span class="cl-label" data-tr="E-posta" data-en="Email">E-posta</span>
+                        <a href="mailto:contact.skymoonstudios@gmail.com" class="cl-value">contact.skymoonstudios@gmail.com</a>
+                    </li>
+                    <li>
+                        <span class="cl-label" data-tr="Konum" data-en="Location">Konum</span>
+                        <span class="cl-value" data-tr="İstanbul, Türkiye" data-en="Istanbul, Türkiye">İstanbul, Türkiye</span>
+                    </li>
+                    <li>
+                        <span class="cl-label" lang="en">LinkedIn</span>
+                        <a href="https://www.linkedin.com/in/gokay-deniz-taslioglu/" class="cl-value" target="_blank" rel="noopener">/in/gokay-deniz-taslioglu</a>
+                    </li>
+                </ul>
             </div>
-            <div class="contact-right rv" data-d=".12">
-                <form class="form-card" id="contactForm">
-                    <div class="tile-border"></div>
-                    <div class="form-inner">
-                        <div class="form-duo">
-                            <div class="field"><label data-tr="Adınız" data-en="Name">Adınız</label><input type="text" data-tr-ph="Adınızı girin" data-en-ph="Enter your name" placeholder="Adınızı girin" required></div>
-                            <div class="field"><label data-tr="Email" data-en="Email">Email</label><input type="email" placeholder="email@adres.com" required></div>
+
+            <div class="bezel form-bezel rv">
+                <form class="bezel-core form-core" id="contactForm" novalidate>
+                    <div class="form-duo">
+                        <div class="field">
+                            <label for="f-name" data-tr="Adınız" data-en="Name">Adınız</label>
+                            <input id="f-name" name="name" type="text" autocomplete="name" required data-tr-ph="Adınız ve soyadınız" data-en-ph="Your full name" placeholder="Adınız ve soyadınız">
+                            <small class="field-err" data-tr="Lütfen adınızı girin." data-en="Please enter your name.">Lütfen adınızı girin.</small>
                         </div>
-                        <div class="field"><label data-tr="Konu" data-en="Subject">Konu</label><input type="text" data-tr-ph="Proje hakkında" data-en-ph="About the project" placeholder="Proje hakkında" required></div>
-                        <div class="field"><label data-tr="Mesajınız" data-en="Your Message">Mesajınız</label><textarea rows="4" data-tr-ph="Projenizden bahsedin..." data-en-ph="Tell us about your project..." placeholder="Projenizden bahsedin..." required></textarea></div>
-                        <button type="submit" class="btn-glow btn-full"><span class="btn-glow-bg"></span><span class="btn-glow-text" data-tr="mesaj gönder →" data-en="send message →">mesaj gönder →</span></button>
+                        <div class="field">
+                            <label for="f-email" data-tr="E-posta" data-en="Email">E-posta</label>
+                            <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="ornek@sirket.com" data-tr-ph="ornek@sirket.com" data-en-ph="you@company.com">
+                            <small class="field-err" data-tr="Geçerli bir e-posta adresi girin." data-en="Enter a valid email address.">Geçerli bir e-posta adresi girin.</small>
+                        </div>
                     </div>
+                    <div class="field">
+                        <label for="f-subject" data-tr="Konu" data-en="Subject">Konu</label>
+                        <input id="f-subject" name="subject" type="text" required data-tr-ph="Örn. mobil uygulama projesi" data-en-ph="e.g. mobile app project" placeholder="Örn. mobil uygulama projesi">
+                        <small class="field-err" data-tr="Lütfen bir konu yazın." data-en="Please add a subject.">Lütfen bir konu yazın.</small>
+                    </div>
+                    <div class="field">
+                        <label for="f-msg" data-tr="Mesajınız" data-en="Message">Mesajınız</label>
+                        <textarea id="f-msg" name="message" rows="5" required data-tr-ph="Projenizden, hedeflerinizden ve zaman planınızdan bahsedin." data-en-ph="Tell us about your project, goals and timeline." placeholder="Projenizden, hedeflerinizden ve zaman planınızdan bahsedin."></textarea>
+                        <small class="field-err" data-tr="Lütfen kısa bir mesaj yazın." data-en="Please write a short message.">Lütfen kısa bir mesaj yazın.</small>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--block">
+                        <span class="btn-label" data-tr="Mesajı gönder" data-en="Send message">Mesajı gönder</span>
+                        <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+                    </button>
+                    <p class="form-note" role="status" aria-live="polite" data-tr="Gönder'e bastığınızda mesajınız e-posta uygulamanızda hazır olarak açılır." data-en="When you press Send, your message opens ready to go in your email app.">Gönder'e bastığınızda mesajınız e-posta uygulamanızda hazır olarak açılır.</p>
                 </form>
             </div>
         </div>
     </section>
 
+    </main>
+
     <!-- ═══════════════ FOOTER ═══════════════ -->
     <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <a href="#hero" class="brand"><img src="skymoonstudioslogo.png" alt="Skymoon Studios" class="brand-logo"><span>skymoon <em>studios</em></span></a>
-                <p data-tr="hayalleri kodluyoruz." data-en="coding dreams.">hayalleri kodluyoruz.</p>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#hero" class="brand"><img src="assets/logo-64.webp" alt="" class="brand-logo" width="32" height="32"><span class="brand-word">Skymoon <em>Studios</em></span></a>
+                    <p data-tr="Fikirleri, insanların kullanmayı sevdiği ürünlere dönüştürüyoruz." data-en="Turning ideas into products people love to use.">Fikirleri, insanların kullanmayı sevdiği ürünlere dönüştürüyoruz.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="f-col">
+                        <h4 data-tr="Stüdyo" data-en="Studio">Stüdyo</h4>
+                        <a href="#about" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
+                        <a href="#services" data-tr="Hizmetler" data-en="Services">Hizmetler</a>
+                        <a href="#work" data-tr="Projeler" data-en="Work">Projeler</a>
+                        <a href="#partners" data-tr="Ortaklar" data-en="Partners">Ortaklar</a>
+                    </div>
+                    <div class="f-col">
+                        <h4 data-tr="Ürünler" data-en="Products">Ürünler</h4>
+                        <a href="https://www.skymoongpa.site" target="_blank" rel="noopener">Skymoon GPA</a>
+                        <a href="https://styleups.me" target="_blank" rel="noopener">StyleUpS</a>
+                    </div>
+                    <div class="f-col">
+                        <h4 data-tr="İletişim" data-en="Contact">İletişim</h4>
+                        <a href="mailto:contact.skymoonstudios@gmail.com" data-tr="E-posta" data-en="Email">E-posta</a>
+                        <a href="https://www.linkedin.com/in/gokay-deniz-taslioglu/" target="_blank" rel="noopener">LinkedIn</a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-cols">
-                <div class="f-col"><h4 data-tr="Şirket" data-en="Company">Şirket</h4><a href="#about" data-tr="Hakkımızda" data-en="About">Hakkımızda</a><a href="#services" data-tr="Hizmetler" data-en="Services">Hizmetler</a><a href="#work" data-tr="Projeler" data-en="Projects">Projeler</a></div>
-                <div class="f-col"><h4 data-tr="İletişim" data-en="Contact">İletişim</h4><a href="mailto:contact@skymoonstudios.com">Email</a><a href="#">Twitter / X</a><a href="#">LinkedIn</a></div>
+            <div class="footer-mark" aria-hidden="true">Skymoon</div>
+            <div class="footer-bottom">
+                <span data-tr="© 2026 Skymoon Studios. Tüm hakları saklıdır." data-en="© 2026 Skymoon Studios. All rights reserved.">© 2026 Skymoon Studios. Tüm hakları saklıdır.</span>
+                <a href="#hero" class="to-top" data-tr="Başa dön ↑" data-en="Back to top ↑">Başa dön ↑</a>
             </div>
-        </div>
-        <div class="container footer-bottom">
-            <span data-tr="© 2026 Skymoon Studios. Tüm hakları saklıdır." data-en="© 2026 Skymoon Studios. All rights reserved.">© 2026 Skymoon Studios. Tüm hakları saklıdır.</span>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=2026-09-29h"></script>
 </body>
 </html>
